@@ -51,15 +51,18 @@ public:
 	Int_t nPass_nonDZ;
 	Int_t nPass_DZ;
 
+	Int_t nPass_IsoMu27; // -- for x-check
+
 	DZFilterEffTool()
 	{
 		this->h_mass = new TH1D("h_mass", "", 10000, 0, 10000 );
 
 		this->nPass_nonDZ = 0;
 		this->nPass_DZ = 0;
+		this->nPass_IsoMu27 = 0;
 	}
 
-	DZFilterEffTool( Setup &_setup )
+	DZFilterEffTool( Setup &_setup ): DZFilterEffTool()
 	{
 		this->setup = _setup;
 	}
@@ -86,20 +89,30 @@ public:
 
 			if( this->IsZEvent( ntuple, event ) ) // -- only for Z events (signal-like events)
 			{
-				if( this->IsFired( event, this->setup.trigNameNonDZ) ) // -- count # events firing non-DZ path
+				if( this->IsFired_MYHLT( event, this->setup.trigNameNonDZ) ) // -- count # events firing non-DZ path
 				{
 					this->nPass_nonDZ++;
 
-					if( this->IsFired( event, this->setup.trigNameDZ) ) // -- count # events firing DZ path also
+					if( this->IsFired_MYHLT( event, this->setup.trigNameDZ) ) // -- count # events firing DZ path also
 						this->nPass_DZ++;
 				}
+
+				if( this->IsFired_MYHLT( event, "HLT_IsoMu27_v14" ) )
+					this->nPass_IsoMu27++;
 			}
 		} // -- end of event iteration
 
-		Double_t dZFilterEff = (Double_t)this->nPass_DZ / (Double_t)this->nPass_nonDZ;
+		Double_t dZFilterEff;
+		if( this->nPass_nonDZ == 0 ) 
+			dZFilterEff = 0;
+		else 
+			dZFilterEff = (Double_t)this->nPass_DZ / (Double_t)this->nPass_nonDZ;
+
 		printf("non-DZ path: %s\n", this->setup.trigNameNonDZ.Data() );
 		printf("DZ path: %s\n", this->setup.trigNameDZ.Data() );
 		printf("DZ filter efficiency (DZ / non-DZ) = %d / %d = %.6lf\n", this->nPass_DZ, this->nPass_nonDZ, dZFilterEff );
+
+		printf("\n# events passing IsoMu27 (for x-check): %d\n", this->nPass_IsoMu27);
 
 		TFile *f_output = TFile::Open("ROOTFile_CalcDZFilterEff.root", "RECREATE");
 		f_output->cd();
@@ -149,10 +162,10 @@ private:
 		return flag;
 	}
 
-	Bool_t IsFired( KPEvent &event, TString trigName )
+	Bool_t IsFired_MYHLT( KPEvent &event, TString trigName )
 	{
 		Bool_t flag = kFALSE;
-		if( std::find(event.vec_FiredTrigger->begin(), event.vec_FiredTrigger->end(), trigName) != event.vec_FiredTrigger->end() )
+		if( std::find(event.vec_MyFiredTrigger->begin(), event.vec_MyFiredTrigger->end(), trigName) != event.vec_MyFiredTrigger->end() )
 			flag = kTRUE;
 
 		return flag;
@@ -189,12 +202,14 @@ void CalcDZFilterEff()
 {
 	Setup setup;
 	setup.lowerLimitPt = 8.0;
-	setup.lowerLimitM = 81.0;
-	setup.upperLimitM = 101.0;
+	// setup.lowerLimitM = 81.0;
+	// setup.upperLimitM = 101.0;
+	setup.lowerLimitM = 76.0;
+	setup.upperLimitM = 106.0;
 	setup.trigNameNonDZ = "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v13";
 	// setup.trigNameDZ = "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v14";
 	setup.trigNameDZ = "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v4";
-	setup.addNtuplePath( "/u/user/kplee/SE_UserHome/EphemeralHLTPhysics1/crab_TSntuple_v20180308_Customized_EphemeralHLTPhysics1_Run2017Fv1_Run305636_GoldenJSON/180308_001029/0000/ntuple_9*.root" );
+	setup.addNtuplePath( "./ntuple_9*.root" );
 
 	DZFilterEffTool *tool = new DZFilterEffTool( setup );
 	tool->Calc();
