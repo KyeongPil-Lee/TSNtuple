@@ -28,6 +28,7 @@ class Setup
 {
 public:
 	vector< TString > vec_ntuplePath;
+	Double_t lowerLimitPt;
 	Double_t lowerLimitM;
 	Double_t upperLimitM;
 	TString trigNameDZ;
@@ -35,7 +36,7 @@ public:
 
 	void addNtuplePath( TString path )
 	{
-		this->vec_ntuplePath.push_back( path )
+		this->vec_ntuplePath.push_back( path );
 		cout << "ntuple path: " << path << endl;
 	}
 };
@@ -99,6 +100,11 @@ public:
 		printf("non-DZ path: %s\n", this->setup.trigNameNonDZ.Data() );
 		printf("DZ path: %s\n", this->setup.trigNameDZ.Data() );
 		printf("DZ filter efficiency (DZ / non-DZ) = %d / %d = %.6lf\n", this->nPass_DZ, this->nPass_nonDZ, dZFilterEff );
+
+		TFile *f_output = TFile::Open("ROOTFile_CalcDZFilterEff.root", "RECREATE");
+		f_output->cd();
+		this->h_mass->Write();
+		f_output->Close();
 	}
 	
 private:
@@ -152,6 +158,31 @@ private:
 		return flag;
 	}
 
+	static inline void loadBar(int x, int n, int r, int w)
+	{
+	    // Only update r times.
+	    if( x == n )
+	    	cout << endl;
+
+	    if ( x % (n/r +1) != 0 ) return;
+
+	 
+	    // Calculuate the ratio of complete-to-incomplete.
+	    float ratio = x/(float)n;
+	    int   c     = ratio * w;
+	 
+	    // Show the percentage complete.
+	    printf("%3d%% [", (int)(ratio*100) );
+	 
+	    // Show the load bar.
+	    for (int x=0; x<c; x++) cout << "=";
+	 
+	    for (int x=c; x<w; x++) cout << " ";
+	 
+	    // ANSI Control codes to go back to the
+	    // previous line and clear it.
+		cout << "]\r" << flush;
+	}
 };
 
 void CalcDZFilterEff()
@@ -161,9 +192,9 @@ void CalcDZFilterEff()
 	setup.lowerLimitM = 81.0;
 	setup.upperLimitM = 101.0;
 	setup.trigNameNonDZ = "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v13";
-	setup.trigNameDZ = "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v14";
-	// setup.trigNameDZ = "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v4";
-	setup.addNtuplePath( "" );
+	// setup.trigNameDZ = "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v14";
+	setup.trigNameDZ = "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v4";
+	setup.addNtuplePath( "/u/user/kplee/SE_UserHome/EphemeralHLTPhysics1/crab_TSntuple_v20180308_Customized_EphemeralHLTPhysics1_Run2017Fv1_Run305636_GoldenJSON/180308_001029/0000/ntuple_9*.root" );
 
 	DZFilterEffTool *tool = new DZFilterEffTool( setup );
 	tool->Calc();
