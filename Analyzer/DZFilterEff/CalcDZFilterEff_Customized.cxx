@@ -198,7 +198,7 @@ private:
 	}
 };
 
-void CalcDZFilterEff()
+void CalcDZFilterEff_Customized()
 {
 	Setup setup;
 	setup.lowerLimitPt = 8.0;
@@ -212,11 +212,9 @@ void CalcDZFilterEff()
 
 	TString basePath = "/u/user/kplee/SE_UserHome";
 
-	setup.addNtuplePath(basePath+"/EphemeralHLTPhysics1/crab_TSntuple_v20180309_Default_EphemeralHLTPhysics1_Run2017Fv1_Run305636_GoldenJSON/180309_123314/0000/*.root");
-	setup.addNtuplePath(basePath+"/EphemeralHLTPhysics2/crab_TSntuple_v20180309_Default_EphemeralHLTPhysics2_Run2017Fv1_Run305636_GoldenJSON/180309_123325/0000/*.root");
-	setup.addNtuplePath(basePath+"/EphemeralHLTPhysics3/crab_TSntuple_v20180309_Default_EphemeralHLTPhysics3_Run2017Fv1_Run305636_GoldenJSON/180309_123336/0000/*.root");
-	setup.addNtuplePath(basePath+"/EphemeralHLTPhysics7/crab_TSntuple_v20180309_Default_EphemeralHLTPhysics7_Run2017Fv1_Run305636_GoldenJSON/180309_123421/0000/*.root");
-	setup.addNtuplePath(basePath+"/EphemeralHLTPhysics8/crab_TSntuple_v20180309_Default_EphemeralHLTPhysics8_Run2017Fv1_Run305636_GoldenJSON/180309_123432/0000/*.root");
+	setup.addNtuplePath(basePath+"/EphemeralHLTPhysics1/crab_TSntuple_v20180309_Customized_EphemeralHLTPhysics1_Run2017Fv1_Run305636_GoldenJSON/180309_123548/0000/*.root");
+	setup.addNtuplePath(basePath+"/EphemeralHLTPhysics4/crab_TSntuple_v20180309_Customized_EphemeralHLTPhysics4_Run2017Fv1_Run305636_GoldenJSON/180309_123627/0000/*.root");
+	setup.addNtuplePath(basePath+"/EphemeralHLTPhysics7/crab_TSntuple_v20180309_Customized_EphemeralHLTPhysics7_Run2017Fv1_Run305636_GoldenJSON/180309_123705/0000/*.root");
 
 	DZFilterEffTool *tool = new DZFilterEffTool( setup );
 	tool->Calc();
