@@ -15,6 +15,7 @@ void CalcDZFilterEff_Customized()
 	TString basePath = "/u/user/kplee/SE_UserHome";
 
 	setup.addNtuplePath(basePath+"/EphemeralHLTPhysics1/crab_TSntuple_v20180309_Customized_EphemeralHLTPhysics1_Run2017Fv1_Run305636_GoldenJSON/180309_123548/0000/*.root");
+	setup.addNtuplePath(basePath+"/EphemeralHLTPhysics2/crab_TSntuple_v20180309_Customized_EphemeralHLTPhysics2_Run2017Fv1_Run305636_GoldenJSON/180309_123602/0000/*.root");
 	setup.addNtuplePath(basePath+"/EphemeralHLTPhysics4/crab_TSntuple_v20180309_Customized_EphemeralHLTPhysics4_Run2017Fv1_Run305636_GoldenJSON/180309_123627/0000/*.root");
 	setup.addNtuplePath(basePath+"/EphemeralHLTPhysics7/crab_TSntuple_v20180309_Customized_EphemeralHLTPhysics7_Run2017Fv1_Run305636_GoldenJSON/180309_123705/0000/*.root");
 

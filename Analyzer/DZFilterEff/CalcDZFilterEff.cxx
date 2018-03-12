@@ -17,6 +17,7 @@ void CalcDZFilterEff()
 	setup.addNtuplePath(basePath+"/EphemeralHLTPhysics1/crab_TSntuple_v20180309_Default_EphemeralHLTPhysics1_Run2017Fv1_Run305636_GoldenJSON/180309_123314/0000/*.root");
 	setup.addNtuplePath(basePath+"/EphemeralHLTPhysics2/crab_TSntuple_v20180309_Default_EphemeralHLTPhysics2_Run2017Fv1_Run305636_GoldenJSON/180309_123325/0000/*.root");
 	setup.addNtuplePath(basePath+"/EphemeralHLTPhysics3/crab_TSntuple_v20180309_Default_EphemeralHLTPhysics3_Run2017Fv1_Run305636_GoldenJSON/180309_123336/0000/*.root");
+	setup.addNtuplePath(basePath+"/EphemeralHLTPhysics5/crab_TSntuple_v20180309_Default_EphemeralHLTPhysics5_Run2017Fv1_Run305636_GoldenJSON/180309_123359/0000/*.root");
 	setup.addNtuplePath(basePath+"/EphemeralHLTPhysics7/crab_TSntuple_v20180309_Default_EphemeralHLTPhysics7_Run2017Fv1_Run305636_GoldenJSON/180309_123421/0000/*.root");
 	setup.addNtuplePath(basePath+"/EphemeralHLTPhysics8/crab_TSntuple_v20180309_Default_EphemeralHLTPhysics8_Run2017Fv1_Run305636_GoldenJSON/180309_123432/0000/*.root");
 

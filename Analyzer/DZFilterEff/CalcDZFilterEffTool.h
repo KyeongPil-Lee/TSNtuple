@@ -19,6 +19,7 @@
 #include <vector>
 #include <TMath.h>
 #include <TSystem.h>
+#include <TEfficiency.h>
 
 #include <Include/NtupleHandle.h>
 #include <Include/Object.h>
@@ -102,18 +103,20 @@ public:
 			}
 		} // -- end of event iteration
 
-		Double_t dZFilterEff;
-		if( this->nPass_nonDZ == 0 ) 
-			dZFilterEff = 0;
-		else 
-			dZFilterEff = (Double_t)this->nPass_DZ / (Double_t)this->nPass_nonDZ;
+		this->Calc_OverallEff( this->nPass_DZ, this->nPass_nonDZ );
 
-		printf("non-DZ path: %s\n", this->setup.trigNameNonDZ.Data() );
-		printf("DZ path: %s\n", this->setup.trigNameDZ.Data() );
-		printf("DZ filter efficiency (DZ / non-DZ) = %d / %d = %.6lf\n", this->nPass_DZ, this->nPass_nonDZ, dZFilterEff );
+		// Double_t dZFilterEff;
+		// if( this->nPass_nonDZ == 0 ) 
+		// 	dZFilterEff = 0;
+		// else 
+		// 	dZFilterEff = (Double_t)this->nPass_DZ / (Double_t)this->nPass_nonDZ;
 
-		Double_t relUnc_stat = this->CalcRelUnc_Stat(this->nPass_DZ,  this->nPass_nonDZ );
-		printf("\tError = %.6lf (%.3lf %%)\n", dZFilterEff*relUnc_stat, relUnc_stat*100);
+		// printf("non-DZ path: %s\n", this->setup.trigNameNonDZ.Data() );
+		// printf("DZ path: %s\n", this->setup.trigNameDZ.Data() );
+		// printf("DZ filter efficiency (DZ / non-DZ) = %d / %d = %.6lf\n", this->nPass_DZ, this->nPass_nonDZ, dZFilterEff );
+
+		// Double_t relUnc_stat = this->CalcRelUnc_Stat(this->nPass_DZ,  this->nPass_nonDZ );
+		// printf("\tError = %.6lf (%.3lf %%)\n", dZFilterEff*relUnc_stat, relUnc_stat*100);
 
 		printf("\n# events passing IsoMu27 (for x-check): %d\n", this->nPass_IsoMu27);
 
@@ -184,6 +187,30 @@ private:
 		Double_t relUnc_ratio = sqrt( relUnc_num*relUnc_num + relUnc_den*relUnc_den);
 
 		return relUnc_ratio;
+	}
+
+	void Calc_OverallEff( Double_t nPass, Double_t nTotal )
+	{
+		TH1D* h_singleBin = new TH1D("h_singleBin", "", 1, 0, 1 );
+		TH1D* h_nPass = (TH1D*)h_singleBin->Clone();
+		h_nPass->SetBinContent(1, nPass);
+		h_nPass->SetBinError(1, sqrt(nPass));
+
+		TH1D* h_nTotal = (TH1D*)h_singleBin->Clone();
+		h_nTotal->SetBinContent(1, nTotal);
+		h_nTotal->SetBinError(1, sqrt(nTotal));
+
+		TEfficiency *TEff = new TEfficiency(*h_nPass, *h_nTotal);
+		TGraphAsymmErrors *g_Eff = (TGraphAsymmErrors*)TEff->CreateGraph()->Clone();
+		TH1D* hEff = Convert_GraphToHist( g_Eff );
+
+		Double_t eff = hEff->GetBinContent(1);
+		Double_t absUnc = hEff->GetBinError(1);
+		Double_t relUnc = absUnc / eff;
+
+		cout << "[Overall efficiency]" << endl;
+		printf("eff. = %.1lf / %.1lf = %.6lf +- %.6lf (%.3lf%%)\n",
+			    nPass, nTotal, eff, absUnc, relUnc*100);
 	}
 
 	static inline void loadBar(int x, int n, int r, int w)
