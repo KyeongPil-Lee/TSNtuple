@@ -74,9 +74,11 @@ class HistProducer
 public:
 	TString fileName;
 	vector<TString> vec_DataPath;
+
+	Int_t nEventSetByHand;
 	HistProducer()
 	{
-
+		this->nEventSetByHand = -1;
 	}
 
 	void SetOutputFileName( TString _fileName )
@@ -88,6 +90,11 @@ public:
 	{
 		printf("[AddDataPath] %s\n", value.Data());
 		vec_DataPath.push_back( value );
+	}
+
+	void SetNEvent( Int_t value )
+	{
+		this->nEventSetByHand = value;
 	}
 
 	// void Produce()
@@ -114,6 +121,14 @@ public:
 		tnpHist->SetPtThreshold( 19 ); // -- only probes above this pT cut will be filled in histograms -- //
 
 		Int_t nEvent = chain->GetEntries();
+		if( this->nEventSetByHand != -1 && (nEvent > this->nEventSetByHand) )
+		{
+			cout << "nEvent in ntuple is larger than nEventSetByHand" << endl;
+			cout << "Constraint # total event by nEventSetByHand" << endl;
+			cout << "nEvent: " << nEvent << " -> " << this->nEventSetByHand << endl;
+
+			nEvent = this->nEventSetByHand;
+		}
 		std::cout << "[Total event: " << nEvent << "]" << std::endl;
 
 		// nEvent = 1000000;
