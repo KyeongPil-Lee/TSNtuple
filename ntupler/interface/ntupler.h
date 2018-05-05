@@ -69,44 +69,46 @@ private:
 
   //For Rerun (Fill_IterL3*)
   void Fill_IterL3(const edm::Event &iEvent);
+  void Fill_IterL3MuonNoID(const edm::Event &iEvent);
 
-  edm::EDGetTokenT< std::vector<reco::Muon> >             Token_OfflineMuon;
-  edm::EDGetTokenT< reco::VertexCollection >              Token_OfflineVertex;
-  edm::EDGetTokenT<edm::TriggerResults>                   Token_TriggerResults;
-  edm::EDGetTokenT<trigger::TriggerEvent>                 Token_TriggerEvent;
-  edm::EDGetTokenT<edm::TriggerResults>                   Token_MyTriggerResults;
-  edm::EDGetTokenT<trigger::TriggerEvent>                 Token_MyTriggerEvent;
+  edm::EDGetTokenT< std::vector<reco::Muon> >                Token_OfflineMuon;
+  edm::EDGetTokenT< reco::VertexCollection >                 Token_OfflineVertex;
+  edm::EDGetTokenT< edm::TriggerResults >                    Token_TriggerResults;
+  edm::EDGetTokenT< trigger::TriggerEvent >                  Token_TriggerEvent;
+  edm::EDGetTokenT< edm::TriggerResults >                    Token_MyTriggerResults;
+  edm::EDGetTokenT< trigger::TriggerEvent >                  Token_MyTriggerEvent;
 
-  edm::EDGetTokenT<reco::RecoChargedCandidateCollection>  Token_L3Muon;
-  edm::EDGetTokenT<reco::RecoChargedCandidateCollection>  Token_L2Muon;
-  edm::EDGetTokenT<l1t::MuonBxCollection>                 Token_L1Muon;
-  edm::EDGetTokenT<reco::RecoChargedCandidateCollection>  Token_TkMuon;
+  edm::EDGetTokenT< reco::RecoChargedCandidateCollection >   Token_L3Muon;
+  edm::EDGetTokenT< reco::RecoChargedCandidateCollection >   Token_L2Muon;
+  edm::EDGetTokenT< l1t::MuonBxCollection >                  Token_L1Muon;
+  edm::EDGetTokenT< reco::RecoChargedCandidateCollection >   Token_TkMuon;
 
-  edm::EDGetTokenT< std::vector<reco::MuonTrackLinks> >   Token_IterL3OI;
-  edm::EDGetTokenT< std::vector<reco::MuonTrackLinks> >   Token_IterL3IO_L2Seeded;
-  edm::EDGetTokenT< std::vector<reco::Track> >            Token_IterL3IO_FromL1;
-  edm::EDGetTokenT< std::vector<reco::MuonTrackLinks> >   Token_IterL3_FromL2;
+  edm::EDGetTokenT< std::vector<reco::MuonTrackLinks> >      Token_IterL3OI;
+  edm::EDGetTokenT< std::vector<reco::MuonTrackLinks> >      Token_IterL3IO_L2Seeded;
+  edm::EDGetTokenT< std::vector<reco::Track> >               Token_IterL3IO_FromL1;
+  edm::EDGetTokenT< std::vector<reco::MuonTrackLinks> >      Token_IterL3_FromL2;
+  edm::EDGetTokenT< std::vector<reco::Muon> >                Token_IterL3MuonNoID;
 
-  edm::EDGetTokenT<reco::IsoDepositMap>                   Token_ChargedIsoDep;
-  edm::EDGetTokenT<reco::RecoChargedCandidateIsolationMap>Token_NeutralIsoDep;
-  edm::EDGetTokenT<reco::RecoChargedCandidateIsolationMap>Token_PhotonIsoDep;
+  edm::EDGetTokenT< reco::IsoDepositMap >                    Token_ChargedIsoDep;
+  edm::EDGetTokenT< reco::RecoChargedCandidateIsolationMap > Token_NeutralIsoDep;
+  edm::EDGetTokenT< reco::RecoChargedCandidateIsolationMap > Token_PhotonIsoDep;
 
-  edm::EDGetTokenT<double>                                Token_Rho;
-  edm::EDGetTokenT<double>                                Token_OfflineRho;
+  edm::EDGetTokenT< double >                                 Token_Rho;
+  edm::EDGetTokenT< double >                                 Token_OfflineRho;
 
-  edm::EDGetTokenT<double>                                Token_RhoECAL;
-  edm::EDGetTokenT<double>                                Token_RhoHCAL;
+  edm::EDGetTokenT< double >                                 Token_RhoECAL;
+  edm::EDGetTokenT< double >                                 Token_RhoHCAL;
 
-  edm::EDGetTokenT<edm::ValueMap<float>>                  Token_OfflineECALPFIso03;
-  edm::EDGetTokenT<edm::ValueMap<float>>                  Token_OfflineHCALPFIso03;
-  edm::EDGetTokenT<edm::ValueMap<float>>                  Token_OfflineECALPFIso04;
-  edm::EDGetTokenT<edm::ValueMap<float>>                  Token_OfflineHCALPFIso04;
+  edm::EDGetTokenT< edm::ValueMap<float> >                   Token_OfflineECALPFIso03;
+  edm::EDGetTokenT< edm::ValueMap<float> >                   Token_OfflineHCALPFIso03;
+  edm::EDGetTokenT< edm::ValueMap<float> >                   Token_OfflineECALPFIso04;
+  edm::EDGetTokenT< edm::ValueMap<float> >                   Token_OfflineHCALPFIso04;
 
-  edm::EDGetTokenT<LumiScalersCollection>                 Token_LumiScaler;
-  edm::EDGetTokenT<LumiScalersCollection>                 Token_OfflineLumiScaler;
-  edm::EDGetTokenT< std::vector<PileupSummaryInfo> >      Token_PUSummaryInfo;
-  edm::EDGetTokenT< GenEventInfoProduct >                 Token_GenEventInfo;
-  edm::EDGetTokenT<reco::GenParticleCollection>           Token_GenParticle;
+  edm::EDGetTokenT< LumiScalersCollection >                  Token_LumiScaler;
+  edm::EDGetTokenT< LumiScalersCollection >                  Token_OfflineLumiScaler;
+  edm::EDGetTokenT< std::vector<PileupSummaryInfo> >         Token_PUSummaryInfo;
+  edm::EDGetTokenT< GenEventInfoProduct >                    Token_GenEventInfo;
+  edm::EDGetTokenT< reco::GenParticleCollection >            Token_GenParticle;
 
   TTree *ntuple;
   static const int ArrSize = 2000;
@@ -313,5 +315,16 @@ private:
   double IterL3_FromL2_GL_Eta[ArrSize];
   double IterL3_FromL2_GL_Phi[ArrSize];
   double IterL3_FromL2_GL_Charge[ArrSize];
+
+  int nIterL3MuonNoID;
+  double IterL3MuonNoID_Pt[ArrSize];
+  double IterL3MuonNoID_Eta[ArrSize];
+  double IterL3MuonNoID_Phi[ArrSize];
+  double IterL3MuonNoID_Charge[ArrSize];
+  int IterL3MuonNoID_IsGLB[ArrSize];
+  int IterL3MuonNoID_IsSTA[ArrSize];
+  int IterL3MuonNoID_IsTRK[ArrSize];
+
+
 
 };
