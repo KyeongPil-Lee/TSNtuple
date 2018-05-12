@@ -1,4 +1,4 @@
-#include <TagProbe/TnPTool_New.h>
+#include <TagProbe/TnPTool.h>
 #include <memory>
 
 class TnPPair: public TnPPairBase {
