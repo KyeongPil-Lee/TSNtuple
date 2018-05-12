@@ -90,25 +90,32 @@ class HistProducer {
       KPEvent event( ntuple );
       Double_t weight = event.IsRealData? 1.0 : event.GenEventWeight;
 
+
+      // -- iteration over all muon pairs
       for(Int_t i_mu=0; i_mu<event.nMuon; i_mu++) {
         KPMuon mu_ith( ntuple, i_mu );
-        for(Int_t j_mu=i_mu+1; j_mu<event.nMuon; j_mu++) { // -- starts from i_mu+1: no duplication -- //
+
+        // -- collection of all possible Tag&Probe pairs with same tag muon (mu_ith)
+        vector<TnPPair*> tnpPairs_sameTag;
+
+        for(Int_t j_mu=0; j_mu<event.nMuon; j_mu++) {
+          if( i_mu == j_mu ) continue;
+
           KPMuon mu_jth( ntuple, j_mu );
 
           TnPPair *tnpPair_ij = new TnPPair( mu_ith, mu_jth, ntuple );
-          if( tnpPair_ij->IsValid() )  {
-            tnpHist->Fill( tnpPair_ij, weight );
-          }
-          else { // -- test the other combination
-            TnPPair *tnpPair_ji = new TnPPair( mu_jth, mu_ith, ntuple );
-            if( tnpPair_ji->IsValid() ) {
-              tnpHist->Fill( tnpPair_ji, weight );
-            }
-            delete tnpPair_ji;
-          }
-
-          delete tnpPair_ij;
+          if( tnpPair_ij->IsValid() )  { tnpPairs_sameTag.push_back( tnpPair_ij ); }
+          else delete tnpPair_ij;
         } // -- end of j-th muon iteration
+
+        // -- fill TnP histogram only when probeMultiplicity == 1
+        if( (Int_t)tnpPairs_sameTag.size() == 1 ) {
+          tnpHist->Fill( tnpPairs_sameTag[0], weight );
+        }
+
+        for( auto tnpPair : tnpPairs_sameTag )
+          delete tnpPair;
+
       } // -- end of i-th muon iteration
 
     } // -- end of event iteration
