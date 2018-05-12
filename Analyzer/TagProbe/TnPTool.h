@@ -326,9 +326,9 @@ public:
     maxMass_ = max;
   }
 
-  TH1D* CalcTnPEff_CutAndCount( TString varName ) {
-    TH1D* hEff = Get_Hist( inputFileName_, "hEffTemplate"+varName, "hEff"+varName);
-    Int_t nBin = hEff->GetNbinsX();
+  TGraphAsymmErrors* CalcTnPEff_CutAndCount( TString varName ) {
+    TH1D* hEffTemp = Get_Hist( inputFileName_, "hEffTemplate"+varName, "hEff"+varName);
+    Int_t nBin = hEffTemp->GetNbinsX();
 
     vector< TH1D* > passHists;
     vector< TH1D* > failHists;
@@ -346,8 +346,8 @@ public:
       failHists.push_back( hTempFail );
     }
 
-    TH1D* h_nPass = (TH1D*)hEff->Clone();
-    TH1D* h_nTotal = (TH1D*)hEff->Clone();
+    TH1D* h_nPass = (TH1D*)hEffTemp->Clone();
+    TH1D* h_nTotal = (TH1D*)hEffTemp->Clone();
 
     Double_t sum_nPass = 0;
     Double_t sum_nTotal = 0;
@@ -368,26 +368,30 @@ public:
     }
 
     TEfficiency *TEff = new TEfficiency(*h_nPass, *h_nTotal);
-    TGraphAsymmErrors *g_Eff = (TGraphAsymmErrors*)TEff->CreateGraph()->Clone();
-    hEff = Convert_GraphToHist( g_Eff );
+    TGraphAsymmErrors *gEff = (TGraphAsymmErrors*)TEff->CreateGraph()->Clone();
 
     for(Int_t i=0; i<nBin; i++) {
       Int_t i_bin = i+1;
       Double_t nEventPass = h_nPass->GetBinContent(i_bin);
       Double_t nEventTotal = h_nTotal->GetBinContent(i_bin);
-      Double_t eff = hEff->GetBinContent(i_bin);
-      Double_t absUncEff = hEff->GetBinError(i_bin);
 
-      printf("[%02d bin: from %.1lf to %.1lf] (Eff, Eff_Err, nEventPass, nEventTotal) = (%.3lf, %.3lf, %.1lf, %.1lf)\n", 
-              i_bin, hEff->GetBinLowEdge(i_bin), hEff->GetBinLowEdge(i_bin+1), eff, absUncEff, nEventPass, nEventTotal);
+      Double_t binCenter, eff;
+      gEff->GetPoint(i, binCenter, eff);
 
+      Double_t effErrHigh = gEff->GetErrorYhigh(i);
+      Double_t relEffErrHigh = (effErrHigh / eff) * 100;
+      Double_t effErrLow = gEff->GetErrorYlow(i);
+      Double_t relEffErrLow = (effErrLow / eff) * 100;
+
+      printf("[%02d bin] (%6.1lf to %6.1lf): eff (%8.1lf / %8.1lf) = %.3lf + %.3lf(%.3lf%%) - %.3lf(%.3lf%%)\n",
+              i_bin, hEffTemp->GetBinLowEdge(i_bin), hEffTemp->GetBinLowEdge(i_bin+1), nEventPass, nEventTotal, eff, effErrHigh, relEffErrHigh, effErrLow, relEffErrLow);
     }
 
     Calc_OverallEff( sum_nPass, sum_nTotal );
 
     cout << endl;
 
-    return hEff;
+    return gEff;
   }
 
 private:
@@ -434,16 +438,19 @@ private:
     h_nTotal->SetBinError(1, sqrt(nTotal));
 
     TEfficiency *TEff = new TEfficiency(*h_nPass, *h_nTotal);
-    TGraphAsymmErrors *g_Eff = (TGraphAsymmErrors*)TEff->CreateGraph()->Clone();
-    TH1D* hEff = Convert_GraphToHist( g_Eff );
+    TGraphAsymmErrors *gEff = (TGraphAsymmErrors*)TEff->CreateGraph()->Clone();
 
-    Double_t eff = hEff->GetBinContent(1);
-    Double_t absUnc = hEff->GetBinError(1);
-    Double_t relUnc = absUnc / eff;
+    Double_t binCenter, eff;
+    gEff->GetPoint(0, binCenter, eff);
+
+    Double_t effErrHigh = gEff->GetErrorYhigh(0);
+    Double_t relEffErrHigh = (effErrHigh / eff) * 100;
+    Double_t effErrLow = gEff->GetErrorYlow(0);
+    Double_t relEffErrLow = (effErrLow / eff) * 100;
 
     cout << "[Overall efficiency]" << endl;
-    printf("eff. = %.1lf / %.1lf = %.6lf +- %.6lf (%.3lf%%)\n",
-          nPass, nTotal, eff, absUnc, relUnc*100);
+    printf("eff (%.1lf / %.1lf) = %.3lf + %.3lf(%.3lf%%) - %.3lf(%.3lf%%)\n",
+            nPass, nTotal, eff, effErrHigh, relEffErrHigh, effErrLow, relEffErrLow );
   }
 
 };
