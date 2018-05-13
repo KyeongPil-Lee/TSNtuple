@@ -1,6 +1,6 @@
 #include <Include/NtupleHandle.h>
 #include <Include/Object.h>
-#include <Include/PlotTools.h>
+#include <Include/SimplePlotTools.h>
 #include <TEfficiency.h>
 
 static inline void loadBar(int x, int n, int r, int w) {
@@ -327,7 +327,7 @@ public:
   }
 
   TGraphAsymmErrors* CalcTnPEff_CutAndCount( TString varName ) {
-    TH1D* hEffTemp = Get_Hist( inputFileName_, "hEffTemplate"+varName, "hEff"+varName);
+    TH1D* hEffTemp = PlotTool::Get_Hist( inputFileName_, "hEffTemplate"+varName, "hEff"+varName);
     Int_t nBin = hEffTemp->GetNbinsX();
 
     vector< TH1D* > passHists;
@@ -338,11 +338,11 @@ public:
       TString binInfo = TString::Format("%02dbin", i);
 
       TString histNamePass = histNameBase + "Pass_" + binInfo;
-      TH1D* hTempPass = Get_Hist( inputFileName_, histNamePass );
+      TH1D* hTempPass = PlotTool::Get_Hist( inputFileName_, histNamePass );
       passHists.push_back( hTempPass );
 
       TString histNameFail = histNameBase + "Fail_" + binInfo;
-      TH1D* hTempFail = Get_Hist( inputFileName_, histNameFail );
+      TH1D* hTempFail = PlotTool::Get_Hist( inputFileName_, histNameFail );
       failHists.push_back( hTempFail );
     }
 
