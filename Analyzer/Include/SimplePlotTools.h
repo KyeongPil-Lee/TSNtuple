@@ -54,16 +54,22 @@ void SetLegend( TLegend *& legend, Double_t xMin = 0.75, Double_t yMin = 0.75, D
 void SetAxis_SinglePad( TAxis *axisX, TAxis *axisY, TString titleX, TString titleY )
 {
   axisX->SetTitle( titleX );
-  axisX->SetLabelSize(0.04);
-  axisX->SetTitleOffset(1.1);
+  axisX->SetTitleFont(42);
   axisX->SetTitleSize(0.05);
+  axisX->SetTitleOffset(1.1);
+
+  axisX->SetLabelFont(42);
+  axisX->SetLabelSize(0.04);
   axisX->SetNoExponent();
   axisX->SetMoreLogLabels();
 
   axisY->SetTitle( titleY );
+  axisY->SetTitleFont(42);
   axisY->SetTitleSize(0.05);
   axisY->SetTitleOffset(1.2);
-  axisY->SetLabelSize(0.045);
+
+  axisY->SetLabelFont(42);
+  axisY->SetLabelSize(0.04);
 }
 
 void SetAxis_TopPad( TAxis *axisX, TAxis *axisY, TString titleY )
@@ -72,30 +78,37 @@ void SetAxis_TopPad( TAxis *axisX, TAxis *axisY, TString titleY )
   axisX->SetLabelSize(0.000);
   axisX->SetTitleSize(0.000);
 
-  axisY->SetTitleFont(42);
   axisY->SetTitle( titleY );
-  axisY->SetTitleSize(0.05);
   axisY->SetTitleFont(42);
+  axisY->SetTitleSize(0.05);
   axisY->SetTitleOffset(1.25);
+
   axisY->SetLabelFont(42);
   axisY->SetLabelSize(0.04);
 }
 
 void SetAxis_BottomPad( TAxis *axisX, TAxis *axisY, TString titleX, TString titleY)
 {
+
+  axisX->SetTitle( titleX );
+  axisX->SetTitleFont(42);
+  axisX->SetTitleSize( 0.2 );
+  axisX->SetTitleOffset( 0.85 );
+
+  axisX->SetLabelFont(42);
+  axisX->SetLabelSize(0.13);
+  axisX->SetLabelOffset(0.01);
+  axisX->SetLabelColor(1);
   axisX->SetMoreLogLabels();
   axisX->SetNoExponent();
-  axisX->SetTitle( titleX );
-  axisX->SetTitleOffset( 0.85 );
-  axisX->SetTitleSize( 0.2 );
-  axisX->SetLabelColor(1);
-  axisX->SetLabelFont(42);
-  axisX->SetLabelOffset(0.01);
-  axisX->SetLabelSize(0.13);
+
 
   axisY->SetTitle( titleY );
+  axisY->SetTitleFont(42);
+  axisY->SetTitleSize(0.12);
   axisY->SetTitleOffset( 0.55 );
-  axisY->SetTitleSize( 0.12);
+
+  axisY->SetLabelFont(42);
   axisY->SetLabelSize( 0.10 );
 }
 
@@ -119,6 +132,13 @@ struct GraphInfo
   TGraphAsymmErrors* g;
   TString legend;
   Int_t color;
+};
+
+struct LatexInfo
+{
+  Double_t x;
+  Double_t y;
+  TString content;
 };
 
 class CanvasBase
@@ -146,12 +166,17 @@ public:
   Double_t maxY_;
   Bool_t setRangeY_;
 
+  // -- latex (CMS Preliminary, lumi. info, etc.)
   TLatex latex_;
   Bool_t setLatexCMSPre_;
   Bool_t setLatexLumiEnergy_;
   Double_t lumi_;
   Int_t energy_;
   Bool_t setLatexCMSSim_;
+
+  // -- additional latex info.
+  vector<LatexInfo> latexInfos_;
+  Bool_t setLatexInfo_;
 
   // -- for the canvas with ratio plot
   TPad* topPad_;
@@ -235,6 +260,13 @@ public:
     setLatexCMSSim_ = kTRUE;
   }
 
+  void RegisterLatex( Double_t x, Double_t y, TString content )
+  {
+    setLatexInfo_ = kTRUE;
+    LatexInfo latexInfo{x, y, content};
+    latexInfos_.push_back( latexInfo );
+  }
+
   // -- implemented later
   virtual void Draw( TString drawOp )
   {
@@ -268,6 +300,7 @@ public:
     lumi_ = -999;
     energy_ = -999;
     setLatexCMSSim_ = kFALSE;
+    setLatexInfo_ = kFALSE;
 
     // -- for the canvas with ratio plot
     topPad_ = NULL;
@@ -343,6 +376,23 @@ public:
 
     if( isLogX_ ) bottomPad_->SetLogx();
   }
+
+  void DrawLatexAll()
+  {
+    if( setLatexCMSPre_ )
+    {
+      if( setLatexLumiEnergy_ ) DrawLatex_CMSPreLumiEnergy();
+      else                      DrawLatex_CMSPre();
+    }
+
+    if( setLatexCMSSim_ ) DrawLatex_CMSSim();
+
+    if( setLatexInfo_ )
+    {
+      for( auto latexInfo : latexInfos_ )
+        latex_.DrawLatexNDC( latexInfo.x, latexInfo.y, latexInfo.content );
+    }
+  }
 }; // class CanvasBase
 
 class HistCanvas : public CanvasBase
@@ -355,7 +405,7 @@ public:
 
   HistCanvas()
   {
-    // -- member variables are initialized by Init() in HistCanvasBase()
+    // -- member variables are initialized by Init() in CanvasBase()
   }
 
   HistCanvas(TString canvasName, Bool_t isLogX = kFALSE, Bool_t isLogY = kFALSE ): HistCanvas()
@@ -415,13 +465,7 @@ public:
 
     legend->Draw();
 
-    if( setLatexCMSPre_ )
-    {
-      if( setLatexLumiEnergy_ ) DrawLatex_CMSPreLumiEnergy();
-      else                      DrawLatex_CMSPre();
-    }
-
-    if( setLatexCMSSim_ ) DrawLatex_CMSSim();
+    DrawLatexAll();
 
     c_->SaveAs(".pdf");
   }
@@ -435,7 +479,7 @@ public:
 
   HistCanvaswRatio()
   {
-    // -- member variables are initialized by Init() in HistCanvasBase()
+    // -- member variables are initialized by Init() in CanvasBase()
   }
 
   HistCanvaswRatio(TString canvasName, Bool_t isLogX = kFALSE, Bool_t isLogY = kFALSE ): HistCanvaswRatio()
@@ -484,13 +528,7 @@ public:
 
     legend->Draw();
 
-    if( setLatexCMSPre_ )
-    {
-      if( setLatexLumiEnergy_ ) DrawLatex_CMSPreLumiEnergy();
-      else                      DrawLatex_CMSPre();
-    }
-
-    if( setLatexCMSSim_ ) DrawLatex_CMSSim();
+    DrawLatexAll();
 
     // -- bottom pad
     c_->cd();
@@ -547,7 +585,262 @@ public:
 class GraphCanvas: public CanvasBase
 {
 public:
+  vector<GraphInfo> graphInfos_;
 
+  GraphCanvas()
+  {
+    // -- member variables are initialized by Init() in CanvasBase()
+  }
+
+  GraphCanvas(TString canvasName, Bool_t isLogX = kFALSE, Bool_t isLogY = kFALSE ): GraphCanvas()
+  {
+    canvasName_ = canvasName;
+    isLogX_ = isLogX;
+    isLogY_ = isLogY;
+  }
+
+  void Register( TGraphAsymmErrors* g, TString legend, Int_t color  )
+  {
+    GraphInfo graphInfo{ (TGraphAsymmErrors*)g->Clone(), legend, color };
+    graphInfos_.push_back( graphInfo );
+  }
+
+  void Draw( TString drawOp = "EPSAME" )
+  {
+    if( !drawOp.Contains("SAME") ) drawOp = drawOp + "SAME";
+
+    TLegend *legend;
+    PlotTool::SetLegend( legend, legendMinX_, legendMinY_, legendMaxX_, legendMaxY_ );
+
+    // -- draw canvas
+    SetCanvas_Square();
+
+    c_->cd();
+
+    Int_t nGraph = graphInfos_.size();
+    for(Int_t i=0; i<nGraph; i++)
+    {
+      TGraphAsymmErrors*& g = graphInfos_[i].g;
+      TString legendName = graphInfos_[i].legend;
+      Int_t color = graphInfos_[i].color;
+
+      if( i == 0) g->Draw("A"+drawOp);
+      else        g->Draw(drawOp);
+
+      g->SetMarkerStyle(20);
+      g->SetMarkerColor(color);
+      g->SetMarkerSize(1.3);
+
+      g->SetLineColor(color);
+      g->SetLineWidth(1.0);
+
+      g->SetFillColorAlpha(kWhite, 0); 
+      g->SetTitle("");
+
+      if( i == 0 ) PlotTool::SetAxis_SinglePad( g->GetXaxis(), g->GetYaxis(), titleX_, titleY_ );
+      if( setRangeX_ ) g->GetXaxis()->SetRangeUser( minX_, maxX_ );
+      if( setRangeY_ ) g->GetYaxis()->SetRangeUser( minY_, maxY_ );
+
+      legend->AddEntry( g, legendName );
+    }
+
+    legend->Draw();
+
+    DrawLatexAll();
+
+    c_->SaveAs(".pdf");
+  }
+};
+
+class GraphCanvaswRatio: public GraphCanvas
+{
+public:
+  vector<GraphInfo> graphInfoRatios_;
+
+  GraphCanvaswRatio()
+  {
+    // -- member variables are initialized by Init() in HistCanvasBase()
+  }
+
+  GraphCanvaswRatio(TString canvasName, Bool_t isLogX = kFALSE, Bool_t isLogY = kFALSE ): GraphCanvaswRatio()
+  {
+    canvasName_ = canvasName;
+    isLogX_ = isLogX;
+    isLogY_ = isLogY;
+  }
+
+  void Draw( TString drawOp = "EPSAME" )
+  {
+    if( !drawOp.Contains("SAME") ) drawOp = drawOp + "SAME";
+
+    TLegend *legend;
+    PlotTool::SetLegend( legend, legendMinX_, legendMinY_, legendMaxX_, legendMaxY_ );
+
+    // -- draw canvas
+    SetCanvas_Ratio();
+
+    c_->cd();
+    topPad_->cd();
+
+    Int_t nGraph = graphInfos_.size();
+    for(Int_t i=0; i<nGraph; i++)
+    {
+      TGraphAsymmErrors*& g = graphInfos_[i].g;
+      TString legendName = graphInfos_[i].legend;
+      Int_t color = graphInfos_[i].color;
+
+      if( i == 0) g->Draw("A"+drawOp);
+      else        g->Draw(drawOp);
+
+      g->SetMarkerStyle(20);
+      g->SetMarkerColor(color);
+      g->SetMarkerSize(1.3);
+
+      g->SetLineColor(color);
+      g->SetLineWidth(1.0);
+
+      g->SetFillColorAlpha(kWhite, 0); 
+      g->SetTitle("");
+
+      if( i == 0 ) PlotTool::SetAxis_TopPad( g->GetXaxis(), g->GetYaxis(), titleY_ );
+      if( setRangeX_ ) g->GetXaxis()->SetRangeUser( minX_, maxX_ );
+      if( setRangeY_ ) g->GetYaxis()->SetRangeUser( minY_, maxY_ );
+
+      legend->AddEntry( g, legendName );
+    }
+
+    legend->Draw();
+
+    DrawLatexAll();
+
+    // -- bottom pad
+    c_->cd();
+    bottomPad_->cd();
+
+    CalcRatioGraph();
+
+    Int_t nGraphRatio = graphInfoRatios_.size();
+    for(Int_t i=0; i<nGraphRatio; i++)
+    {
+      TGraphAsymmErrors*& g_ratio = graphInfoRatios_[i].g;
+      Int_t               color   = graphInfoRatios_[i].color;
+
+      if( i == 0) g_ratio->Draw("A"+drawOp);
+      else        g_ratio->Draw(drawOp);
+
+      g_ratio->SetMarkerStyle(20);
+      g_ratio->SetMarkerColor(color);
+      g_ratio->SetMarkerSize(1.3);
+
+      g_ratio->SetLineColor(color);
+      g_ratio->SetLineWidth(1.0);
+
+      g_ratio->SetFillColorAlpha(kWhite, 0); 
+      g_ratio->SetTitle("");
+
+      if( i == 0 ) SetAxis_BottomPad(g_ratio->GetXaxis(), g_ratio->GetYaxis(), titleX_, titleRatio_);
+      if( setRangeRatio_ ) g_ratio->GetYaxis()->SetRangeUser( minRatio_, maxRatio_ );
+    }
+
+    TF1 *f_line;
+    PlotTool::DrawLine(f_line);
+
+    c_->SaveAs(".pdf");
+  }
+
+  void CalcRatioGraph()
+  {
+    TGraphAsymmErrors* g_ref = graphInfos_[0].g;
+
+    Int_t nGraph = graphInfos_.size();
+    for(Int_t i=1; i<nGraph; i++) // -- starts with 1 -- //
+    {
+      TGraphAsymmErrors* g_target = (TGraphAsymmErrors*)graphInfos_[i].g->Clone();
+
+      TString legend = graphInfos_[i].legend;
+      Int_t color = graphInfos_[i].color;
+
+      TGraphAsymmErrors *g_ratioTemp = MakeRatioGraph( g_target, g_ref );
+
+      GraphInfo graphInfoRatio{ g_ratioTemp, legend, color };
+      graphInfoRatios_.push_back( graphInfoRatio );
+    }
+  }
+
+  // -- NUM = Numerator
+  // -- DEN = Denominator
+  TGraphAsymmErrors* MakeRatioGraph(TGraphAsymmErrors *g_NUM, TGraphAsymmErrors *g_DEN)
+  {
+    TGraphAsymmErrors* g_ratio = (TGraphAsymmErrors*)g_DEN->Clone();
+    g_ratio->Set(0); // --Remove all points (reset) -- //
+
+    Int_t nPoint_NUM = g_NUM->GetN();
+    Int_t nPoint_DEN = g_DEN->GetN();
+    if( nPoint_NUM != nPoint_DEN )
+      printf("# points is different bewteen two graph...be careful for the ratio plot\n");
+
+    for(Int_t i_p=0; i_p<nPoint_NUM; i_p++)
+    {
+      Double_t x_NUM, y_NUM;
+      g_NUM->GetPoint(i_p, x_NUM, y_NUM);
+      Double_t error_NUMLow = g_NUM->GetErrorYlow(i_p);
+      Double_t error_NUMHigh = g_NUM->GetErrorYhigh(i_p);
+      // -- take the larger uncertainty
+      Double_t error_NUM = error_NUMLow > error_NUMHigh ? error_NUMLow : error_NUMHigh;
+
+      Double_t x_DEN, y_DEN;
+      g_DEN->GetPoint(i_p, x_DEN, y_DEN);
+      Double_t error_DENLow = g_DEN->GetErrorYlow(i_p);
+      Double_t error_DENHigh = g_DEN->GetErrorYhigh(i_p);
+      // -- take the larger uncertainty
+      Double_t error_DEN = error_DENLow > error_DENHigh ? error_DENLow : error_DENHigh;
+
+      Double_t ratio;
+      Double_t ratio_error;
+      if( (nPoint_NUM != nPoint_DEN) && i_p >= nPoint_DEN )
+      {
+        ratio = 0;
+        ratio_error = 0;
+      }
+      // else if(y_Type1 != 0 && error_Type1 != 0 && y_Type2 != 0 && error_Type2 != 0)
+      else if(y_DEN != 0)
+      {
+        ratio = y_NUM / y_DEN;
+        ratio_error = this->Error_PropagatedAoverB(y_NUM, error_NUM, y_DEN, error_DEN);
+        //calculate Scale Factor(Type1/Type2) & error
+
+        // cout << "ratio: " << ratio << " ratio_error: " << ratio_error << endl;
+      }
+      else
+      {
+        cout << "Denominator is 0! ... ratio and its error are set as 0" << endl;
+        ratio = 0;
+        ratio_error = 0;
+      }
+
+      //Set Central value
+      g_ratio->SetPoint(i_p, x_NUM, ratio);
+
+      //Set the error
+      Double_t error_XLow = g_NUM->GetErrorXlow(i_p);
+      Double_t error_Xhigh = g_NUM->GetErrorXhigh(i_p);
+      g_ratio->SetPointError(i_p, error_XLow, error_Xhigh, ratio_error, ratio_error);
+
+      // cout << endl;
+    }
+
+    return g_ratio;
+  }
+
+  Double_t Error_PropagatedAoverB(Double_t A, Double_t sigma_A, Double_t B, Double_t sigma_B)
+  {
+    Double_t ratio_A = (sigma_A) / A;
+    Double_t ratio_B = (sigma_B) / B;
+
+    Double_t errorSquare = ratio_A * ratio_A + ratio_B * ratio_B;
+
+    return (A/B) * sqrt(errorSquare);
+  }
 };
 
 }; // -- namespace PlotTool
