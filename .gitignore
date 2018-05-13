@@ -48,6 +48,5 @@ Outputs/
 
 *.root
 *.log
-*test*
-*TEST*
+
 *__init__*
