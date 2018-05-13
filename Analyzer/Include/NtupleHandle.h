@@ -143,7 +143,17 @@ public:
   Double_t        L1Muon_Charge[ArrSize];   //[nL1Muon]
   Double_t        L1Muon_Quality[ArrSize];   //[nL1Muon]
 
-  NtupleHandle( TChain* _chain)
+  NtupleHandle( TChain* _chain):
+  vec_FiredTrigger(0),
+  vec_FilterName(0),
+  vec_HLTObj_Pt(0),
+  vec_HLTObj_Eta(0),
+  vec_HLTObj_Phi(0),
+  vec_MyFiredTrigger(0),
+  vec_MyFilterName(0),
+  vec_MyHLTObj_Pt(0),
+  vec_MyHLTObj_Eta(0),
+  vec_MyHLTObj_Phi(0)
   {
     this->chain = _chain;
     // chain->SetBranchStatus("*", 0);
