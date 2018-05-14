@@ -48,3 +48,6 @@ Outputs/
 *.exe
 *.out
 *.app
+
+# else
+*.pdf

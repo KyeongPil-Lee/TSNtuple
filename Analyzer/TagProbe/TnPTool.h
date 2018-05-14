@@ -50,6 +50,8 @@ public:
   }
 
   Bool_t IsValid() {
+    // cout << "isValid_: " << isValid_ << endl;
+
     if( IsTag() && IsProbe() ) {
       mass_ = (tag_.LVec_P + probe_.LVec_P).M(); // -- used in IsGoodPair
 
@@ -57,9 +59,14 @@ public:
         isValid_ = kTRUE;
         nVtx_ = ntuple_->nVertices;
 
-        // cout << "TnP pair is found" << endl;
+        // printf("\t\t[Valid T&P pair is found]\n");
 
         if( IsPassingProbe() ) isPassingProbe_ = kTRUE;
+
+        // if( isPassingProbe_) 
+        //   printf("\t\t\tProbe: Passing probe\n");
+        // else
+        //   printf("\t\t\tProbe: Failing probe\n");
 
         // if( isPassingProbe_) cout << "\tPassing probe" << endl;
       }
