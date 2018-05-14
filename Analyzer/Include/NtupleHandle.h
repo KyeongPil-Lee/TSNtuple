@@ -13,7 +13,7 @@ class NtupleHandle
 public:
   TChain *chain;
 
-  Bool_t      IsRealData;
+  Bool_t          IsRealData;
   Int_t           RunNum;
   Int_t           LumiBlockNum;
   ULong64_t       EventNum;
@@ -21,13 +21,13 @@ public:
   Double_t        Rho_Offline;
   Double_t        BX_ID;
   Double_t        InstLumi;
-  Double_t    DataPU;
-  Double_t    DataPURMS;
-  Double_t    BunchLumi;
+  Double_t        DataPU;
+  Double_t        DataPURMS;
+  Double_t        BunchLumi;
   Double_t        OfflineInstLumi;
-  Double_t    OfflineDataPU;
-  Double_t    OfflineDataPURMS;
-  Double_t    OfflineBunchLumi;
+  Double_t        OfflineDataPU;
+  Double_t        OfflineDataPURMS;
+  Double_t        OfflineBunchLumi;
   Int_t           TruePU;
   Double_t        Rho;
   Double_t        RhoECAL;
@@ -142,6 +142,20 @@ public:
   Double_t        L1Muon_Phi[ArrSize];   //[nL1Muon]
   Double_t        L1Muon_Charge[ArrSize];   //[nL1Muon]
   Double_t        L1Muon_Quality[ArrSize];   //[nL1Muon]
+
+  Int_t           nIterL3_FromL2;
+  Double_t        IterL3_FromL2_TK_Pt[ArrSize];  //TracKer
+  Double_t        IterL3_FromL2_TK_Eta[ArrSize];
+  Double_t        IterL3_FromL2_TK_Phi[ArrSize];
+  Double_t        IterL3_FromL2_TK_Charge[ArrSize];
+  Double_t        IterL3_FromL2_SA_Pt[ArrSize];  //StandAlone
+  Double_t        IterL3_FromL2_SA_Eta[ArrSize];
+  Double_t        IterL3_FromL2_SA_Phi[ArrSize];
+  Double_t        IterL3_FromL2_SA_Charge[ArrSize];
+  Double_t        IterL3_FromL2_GL_Pt[ArrSize];  //GLobal
+  Double_t        IterL3_FromL2_GL_Eta[ArrSize];
+  Double_t        IterL3_FromL2_GL_Phi[ArrSize];
+  Double_t        IterL3_FromL2_GL_Charge[ArrSize];
 
   NtupleHandle( TChain* _chain):
   vec_FiredTrigger(0),
@@ -267,6 +281,9 @@ public:
 
     chain->SetBranchStatus("nL1Muon", 1);
     chain->SetBranchAddress("nL1Muon", &nL1Muon);
+
+    chain->SetBranchStatus("nIterL3_FromL2", 1);
+    chain->SetBranchAddress("nIterL3_FromL2", &nIterL3_FromL2);
   }
 
   void TurnOnBranches_HLT()
@@ -577,6 +594,45 @@ public:
 
     chain->SetBranchStatus("L1Muon_Quality", 1);
     chain->SetBranchAddress("L1Muon_Quality", &L1Muon_Quality);
+  }
+
+  void TurnOnBranches_IterL3_FromL2()
+  {
+    chain->SetBranchStatus("IterL3_FromL2_TK_Pt", 1);
+    chain->SetBranchAddress("IterL3_FromL2_TK_Pt", &IterL3_FromL2_TK_Pt);
+
+    chain->SetBranchStatus("IterL3_FromL2_TK_Eta", 1);
+    chain->SetBranchAddress("IterL3_FromL2_TK_Eta", &IterL3_FromL2_TK_Eta);
+
+    chain->SetBranchStatus("IterL3_FromL2_TK_Phi", 1);
+    chain->SetBranchAddress("IterL3_FromL2_TK_Phi", &IterL3_FromL2_TK_Phi);
+
+    chain->SetBranchStatus("IterL3_FromL2_TK_Charge", 1);
+    chain->SetBranchAddress("IterL3_FromL2_TK_Charge", &IterL3_FromL2_TK_Charge);
+
+    chain->SetBranchStatus("IterL3_FromL2_SA_Pt", 1);
+    chain->SetBranchAddress("IterL3_FromL2_SA_Pt", &IterL3_FromL2_SA_Pt);
+
+    chain->SetBranchStatus("IterL3_FromL2_SA_Eta", 1);
+    chain->SetBranchAddress("IterL3_FromL2_SA_Eta", &IterL3_FromL2_SA_Eta);
+
+    chain->SetBranchStatus("IterL3_FromL2_SA_Phi", 1);
+    chain->SetBranchAddress("IterL3_FromL2_SA_Phi", &IterL3_FromL2_SA_Phi);
+
+    chain->SetBranchStatus("IterL3_FromL2_SA_Charge", 1);
+    chain->SetBranchAddress("IterL3_FromL2_SA_Charge", &IterL3_FromL2_SA_Charge);
+
+    chain->SetBranchStatus("IterL3_FromL2_GL_Pt", 1);
+    chain->SetBranchAddress("IterL3_FromL2_GL_Pt", &IterL3_FromL2_GL_Pt);
+
+    chain->SetBranchStatus("IterL3_FromL2_GL_Eta", 1);
+    chain->SetBranchAddress("IterL3_FromL2_GL_Eta", &IterL3_FromL2_GL_Eta);
+
+    chain->SetBranchStatus("IterL3_FromL2_GL_Phi", 1);
+    chain->SetBranchAddress("IterL3_FromL2_GL_Phi", &IterL3_FromL2_GL_Phi);
+
+    chain->SetBranchStatus("IterL3_FromL2_GL_Charge", 1);
+    chain->SetBranchAddress("IterL3_FromL2_GL_Charge", &IterL3_FromL2_GL_Charge);
   }
 
 };
