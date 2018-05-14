@@ -46,7 +46,7 @@ Outputs/
 *.out
 *.app
 
-*.root
+# *.root
 *.log
-
 *__init__*
+*ACLiC*

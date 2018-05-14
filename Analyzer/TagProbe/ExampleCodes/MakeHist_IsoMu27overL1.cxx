@@ -140,7 +140,7 @@ private:
 void MakeHist_IsoMu27overL1() {
   std::unique_ptr<HistProducer> histProducer( new HistProducer() );
   histProducer->SetOutputFileName("ROOTFile_TnPHist_example.root");
-  histProducer->AddDataPath("ntuple_9.root");
+  histProducer->AddDataPath("/Users/KyeongPil_Lee/ServiceWorks/MuonHLT/v20180507_v01_UpdateTnPCode/TSNtuple/Analyzer/TagProbe/ExampleCodes/ntuple_9.root");
   histProducer->Set_minPt( 29 ); // -- min pT applied for eta, phi and vtx
 
   histProducer->Produce();
