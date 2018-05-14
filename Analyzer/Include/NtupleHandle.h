@@ -13,7 +13,7 @@ class NtupleHandle
 public:
   TChain *chain;
 
-  Bool_t      IsRealData;
+  Bool_t          IsRealData;
   Int_t           RunNum;
   Int_t           LumiBlockNum;
   ULong64_t       EventNum;
@@ -21,13 +21,13 @@ public:
   Double_t        Rho_Offline;
   Double_t        BX_ID;
   Double_t        InstLumi;
-  Double_t    DataPU;
-  Double_t    DataPURMS;
-  Double_t    BunchLumi;
+  Double_t        DataPU;
+  Double_t        DataPURMS;
+  Double_t        BunchLumi;
   Double_t        OfflineInstLumi;
-  Double_t    OfflineDataPU;
-  Double_t    OfflineDataPURMS;
-  Double_t    OfflineBunchLumi;
+  Double_t        OfflineDataPU;
+  Double_t        OfflineDataPURMS;
+  Double_t        OfflineBunchLumi;
   Int_t           TruePU;
   Double_t        Rho;
   Double_t        RhoECAL;
@@ -143,6 +143,63 @@ public:
   Double_t        L1Muon_Charge[ArrSize];   //[nL1Muon]
   Double_t        L1Muon_Quality[ArrSize];   //[nL1Muon]
 
+  Int_t           nIterL3OI;
+  Double_t        IterL3OI_TK_Pt[ArrSize];  //TracKer
+  Double_t        IterL3OI_TK_Eta[ArrSize];
+  Double_t        IterL3OI_TK_Phi[ArrSize];
+  Double_t        IterL3OI_TK_Charge[ArrSize];
+  Double_t        IterL3OI_SA_Pt[ArrSize];  //StandAlone
+  Double_t        IterL3OI_SA_Eta[ArrSize];
+  Double_t        IterL3OI_SA_Phi[ArrSize];
+  Double_t        IterL3OI_SA_Charge[ArrSize];
+  Double_t        IterL3OI_GL_Pt[ArrSize];  //GLobal
+  Double_t        IterL3OI_GL_Eta[ArrSize];
+  Double_t        IterL3OI_GL_Phi[ArrSize];
+  Double_t        IterL3OI_GL_Charge[ArrSize];
+
+  Int_t           nIterL3IO_L2Seeded;
+  Double_t        IterL3IO_L2Seeded_TK_Pt[ArrSize];  //TracKer
+  Double_t        IterL3IO_L2Seeded_TK_Eta[ArrSize];
+  Double_t        IterL3IO_L2Seeded_TK_Phi[ArrSize];
+  Double_t        IterL3IO_L2Seeded_TK_Charge[ArrSize];
+  Double_t        IterL3IO_L2Seeded_SA_Pt[ArrSize];  //StandAlone
+  Double_t        IterL3IO_L2Seeded_SA_Eta[ArrSize];
+  Double_t        IterL3IO_L2Seeded_SA_Phi[ArrSize];
+  Double_t        IterL3IO_L2Seeded_SA_Charge[ArrSize];
+  Double_t        IterL3IO_L2Seeded_GL_Pt[ArrSize];  //GLobal
+  Double_t        IterL3IO_L2Seeded_GL_Eta[ArrSize];
+  Double_t        IterL3IO_L2Seeded_GL_Phi[ArrSize];
+  Double_t        IterL3IO_L2Seeded_GL_Charge[ArrSize];
+
+  Int_t           nIterL3IO_FromL1;
+  Double_t        IterL3IO_FromL1_Pt[ArrSize];  //reco::Tracks
+  Double_t        IterL3IO_FromL1_Eta[ArrSize];
+  Double_t        IterL3IO_FromL1_Phi[ArrSize];
+  Double_t        IterL3IO_FromL1_Charge[ArrSize];
+
+  Int_t           nIterL3_FromL2;
+  Double_t        IterL3_FromL2_TK_Pt[ArrSize];  //TracKer
+  Double_t        IterL3_FromL2_TK_Eta[ArrSize];
+  Double_t        IterL3_FromL2_TK_Phi[ArrSize];
+  Double_t        IterL3_FromL2_TK_Charge[ArrSize];
+  Double_t        IterL3_FromL2_SA_Pt[ArrSize];  //StandAlone
+  Double_t        IterL3_FromL2_SA_Eta[ArrSize];
+  Double_t        IterL3_FromL2_SA_Phi[ArrSize];
+  Double_t        IterL3_FromL2_SA_Charge[ArrSize];
+  Double_t        IterL3_FromL2_GL_Pt[ArrSize];  //GLobal
+  Double_t        IterL3_FromL2_GL_Eta[ArrSize];
+  Double_t        IterL3_FromL2_GL_Phi[ArrSize];
+  Double_t        IterL3_FromL2_GL_Charge[ArrSize];
+
+  Int_t           nIterL3MuonNoID;
+  Double_t        IterL3MuonNoID_Pt[ArrSize];
+  Double_t        IterL3MuonNoID_Eta[ArrSize];
+  Double_t        IterL3MuonNoID_Phi[ArrSize];
+  Double_t        IterL3MuonNoID_Charge[ArrSize];
+  Int_t           IterL3MuonNoID_IsGLB[ArrSize];
+  Int_t           IterL3MuonNoID_IsSTA[ArrSize];
+  Int_t           IterL3MuonNoID_IsTRK[ArrSize];
+
   NtupleHandle( TChain* _chain):
   vec_FiredTrigger(0),
   vec_FilterName(0),
@@ -163,6 +220,11 @@ public:
     this->TurnOnBranches_HLT();
     this->TurnOnBranches_Muon();
     this->TurnOnBranches_HLTRerunObject();
+    this->TurnOnBranches_IterL3OI();
+    this->TurnOnBranches_IterL3IO_L2Seeded();
+    this->TurnOnBranches_IterL3IO_FromL1();
+    this->TurnOnBranches_IterL3_FromL2();
+    this->TurnOnBranches_IterL3MuonNoID();
   }
 
   void GetEvent(Int_t i_event )
@@ -267,6 +329,21 @@ public:
 
     chain->SetBranchStatus("nL1Muon", 1);
     chain->SetBranchAddress("nL1Muon", &nL1Muon);
+
+    chain->SetBranchStatus("nIterL3OI", 1);
+    chain->SetBranchAddress("nIterL3OI", &nIterL3OI);
+
+    chain->SetBranchStatus("nIterL3IO_L2Seeded", 1);
+    chain->SetBranchAddress("nIterL3IO_L2Seeded", &nIterL3IO_L2Seeded);
+
+    chain->SetBranchStatus("nIterL3IO_FromL1", 1);
+    chain->SetBranchAddress("nIterL3IO_FromL1", &nIterL3IO_FromL1);
+
+    chain->SetBranchStatus("nIterL3_FromL2", 1);
+    chain->SetBranchAddress("nIterL3_FromL2", &nIterL3_FromL2);
+
+    chain->SetBranchStatus("nIterL3MuonNoID", 1);
+    chain->SetBranchAddress("nIterL3MuonNoID", &nIterL3MuonNoID);
   }
 
   void TurnOnBranches_HLT()
@@ -577,6 +654,162 @@ public:
 
     chain->SetBranchStatus("L1Muon_Quality", 1);
     chain->SetBranchAddress("L1Muon_Quality", &L1Muon_Quality);
+  }
+
+  void TurnOnBranches_IterL3_FromL2()
+  {
+    chain->SetBranchStatus("IterL3_FromL2_TK_Pt", 1);
+    chain->SetBranchAddress("IterL3_FromL2_TK_Pt", &IterL3_FromL2_TK_Pt);
+
+    chain->SetBranchStatus("IterL3_FromL2_TK_Eta", 1);
+    chain->SetBranchAddress("IterL3_FromL2_TK_Eta", &IterL3_FromL2_TK_Eta);
+
+    chain->SetBranchStatus("IterL3_FromL2_TK_Phi", 1);
+    chain->SetBranchAddress("IterL3_FromL2_TK_Phi", &IterL3_FromL2_TK_Phi);
+
+    chain->SetBranchStatus("IterL3_FromL2_TK_Charge", 1);
+    chain->SetBranchAddress("IterL3_FromL2_TK_Charge", &IterL3_FromL2_TK_Charge);
+
+    chain->SetBranchStatus("IterL3_FromL2_SA_Pt", 1);
+    chain->SetBranchAddress("IterL3_FromL2_SA_Pt", &IterL3_FromL2_SA_Pt);
+
+    chain->SetBranchStatus("IterL3_FromL2_SA_Eta", 1);
+    chain->SetBranchAddress("IterL3_FromL2_SA_Eta", &IterL3_FromL2_SA_Eta);
+
+    chain->SetBranchStatus("IterL3_FromL2_SA_Phi", 1);
+    chain->SetBranchAddress("IterL3_FromL2_SA_Phi", &IterL3_FromL2_SA_Phi);
+
+    chain->SetBranchStatus("IterL3_FromL2_SA_Charge", 1);
+    chain->SetBranchAddress("IterL3_FromL2_SA_Charge", &IterL3_FromL2_SA_Charge);
+
+    chain->SetBranchStatus("IterL3_FromL2_GL_Pt", 1);
+    chain->SetBranchAddress("IterL3_FromL2_GL_Pt", &IterL3_FromL2_GL_Pt);
+
+    chain->SetBranchStatus("IterL3_FromL2_GL_Eta", 1);
+    chain->SetBranchAddress("IterL3_FromL2_GL_Eta", &IterL3_FromL2_GL_Eta);
+
+    chain->SetBranchStatus("IterL3_FromL2_GL_Phi", 1);
+    chain->SetBranchAddress("IterL3_FromL2_GL_Phi", &IterL3_FromL2_GL_Phi);
+
+    chain->SetBranchStatus("IterL3_FromL2_GL_Charge", 1);
+    chain->SetBranchAddress("IterL3_FromL2_GL_Charge", &IterL3_FromL2_GL_Charge);
+  }
+
+  void TurnOnBranches_IterL3OI()
+  {
+    chain->SetBranchStatus("IterL3OI_TK_Pt", 1);
+    chain->SetBranchAddress("IterL3OI_TK_Pt", &IterL3OI_TK_Pt);
+
+    chain->SetBranchStatus("IterL3OI_TK_Eta", 1);
+    chain->SetBranchAddress("IterL3OI_TK_Eta", &IterL3OI_TK_Eta);
+
+    chain->SetBranchStatus("IterL3OI_TK_Phi", 1);
+    chain->SetBranchAddress("IterL3OI_TK_Phi", &IterL3OI_TK_Phi);
+
+    chain->SetBranchStatus("IterL3OI_TK_Charge", 1);
+    chain->SetBranchAddress("IterL3OI_TK_Charge", &IterL3OI_TK_Charge);
+
+    chain->SetBranchStatus("IterL3OI_SA_Pt", 1);
+    chain->SetBranchAddress("IterL3OI_SA_Pt", &IterL3OI_SA_Pt);
+
+    chain->SetBranchStatus("IterL3OI_SA_Eta", 1);
+    chain->SetBranchAddress("IterL3OI_SA_Eta", &IterL3OI_SA_Eta);
+
+    chain->SetBranchStatus("IterL3OI_SA_Phi", 1);
+    chain->SetBranchAddress("IterL3OI_SA_Phi", &IterL3OI_SA_Phi);
+
+    chain->SetBranchStatus("IterL3OI_SA_Charge", 1);
+    chain->SetBranchAddress("IterL3OI_SA_Charge", &IterL3OI_SA_Charge);
+
+    chain->SetBranchStatus("IterL3OI_GL_Pt", 1);
+    chain->SetBranchAddress("IterL3OI_GL_Pt", &IterL3OI_GL_Pt);
+
+    chain->SetBranchStatus("IterL3OI_GL_Eta", 1);
+    chain->SetBranchAddress("IterL3OI_GL_Eta", &IterL3OI_GL_Eta);
+
+    chain->SetBranchStatus("IterL3OI_GL_Phi", 1);
+    chain->SetBranchAddress("IterL3OI_GL_Phi", &IterL3OI_GL_Phi);
+
+    chain->SetBranchStatus("IterL3OI_GL_Charge", 1);
+    chain->SetBranchAddress("IterL3OI_GL_Charge", &IterL3OI_GL_Charge);
+  }
+
+  void TurnOnBranches_IterL3IO_L2Seeded()
+  {
+    chain->SetBranchStatus("IterL3IO_L2Seeded_TK_Pt", 1);
+    chain->SetBranchAddress("IterL3IO_L2Seeded_TK_Pt", &IterL3IO_L2Seeded_TK_Pt);
+
+    chain->SetBranchStatus("IterL3IO_L2Seeded_TK_Eta", 1);
+    chain->SetBranchAddress("IterL3IO_L2Seeded_TK_Eta", &IterL3IO_L2Seeded_TK_Eta);
+
+    chain->SetBranchStatus("IterL3IO_L2Seeded_TK_Phi", 1);
+    chain->SetBranchAddress("IterL3IO_L2Seeded_TK_Phi", &IterL3IO_L2Seeded_TK_Phi);
+
+    chain->SetBranchStatus("IterL3IO_L2Seeded_TK_Charge", 1);
+    chain->SetBranchAddress("IterL3IO_L2Seeded_TK_Charge", &IterL3IO_L2Seeded_TK_Charge);
+
+    chain->SetBranchStatus("IterL3IO_L2Seeded_SA_Pt", 1);
+    chain->SetBranchAddress("IterL3IO_L2Seeded_SA_Pt", &IterL3IO_L2Seeded_SA_Pt);
+
+    chain->SetBranchStatus("IterL3IO_L2Seeded_SA_Eta", 1);
+    chain->SetBranchAddress("IterL3IO_L2Seeded_SA_Eta", &IterL3IO_L2Seeded_SA_Eta);
+
+    chain->SetBranchStatus("IterL3IO_L2Seeded_SA_Phi", 1);
+    chain->SetBranchAddress("IterL3IO_L2Seeded_SA_Phi", &IterL3IO_L2Seeded_SA_Phi);
+
+    chain->SetBranchStatus("IterL3IO_L2Seeded_SA_Charge", 1);
+    chain->SetBranchAddress("IterL3IO_L2Seeded_SA_Charge", &IterL3IO_L2Seeded_SA_Charge);
+
+    chain->SetBranchStatus("IterL3IO_L2Seeded_GL_Pt", 1);
+    chain->SetBranchAddress("IterL3IO_L2Seeded_GL_Pt", &IterL3IO_L2Seeded_GL_Pt);
+
+    chain->SetBranchStatus("IterL3IO_L2Seeded_GL_Eta", 1);
+    chain->SetBranchAddress("IterL3IO_L2Seeded_GL_Eta", &IterL3IO_L2Seeded_GL_Eta);
+
+    chain->SetBranchStatus("IterL3IO_L2Seeded_GL_Phi", 1);
+    chain->SetBranchAddress("IterL3IO_L2Seeded_GL_Phi", &IterL3IO_L2Seeded_GL_Phi);
+
+    chain->SetBranchStatus("IterL3IO_L2Seeded_GL_Charge", 1);
+    chain->SetBranchAddress("IterL3IO_L2Seeded_GL_Charge", &IterL3IO_L2Seeded_GL_Charge);
+  }
+
+  void TurnOnBranches_IterL3IO_FromL1()
+  {
+    chain->SetBranchStatus("IterL3IO_FromL1_Pt", 1);
+    chain->SetBranchAddress("IterL3IO_FromL1_Pt", &IterL3IO_FromL1_Pt);
+
+    chain->SetBranchStatus("IterL3IO_FromL1_Eta", 1);
+    chain->SetBranchAddress("IterL3IO_FromL1_Eta", &IterL3IO_FromL1_Eta);
+
+    chain->SetBranchStatus("IterL3IO_FromL1_Phi", 1);
+    chain->SetBranchAddress("IterL3IO_FromL1_Phi", &IterL3IO_FromL1_Phi);
+
+    chain->SetBranchStatus("IterL3IO_FromL1_Charge", 1);
+    chain->SetBranchAddress("IterL3IO_FromL1_Charge", &IterL3IO_FromL1_Charge);
+  }
+
+  void TurnOnBranches_IterL3MuonNoID()
+  {
+    chain->SetBranchStatus("IterL3MuonNoID_Pt", 1);
+    chain->SetBranchAddress("IterL3MuonNoID_Pt", &IterL3MuonNoID_Pt);
+
+    chain->SetBranchStatus("IterL3MuonNoID_Eta", 1);
+    chain->SetBranchAddress("IterL3MuonNoID_Eta", &IterL3MuonNoID_Eta);
+
+    chain->SetBranchStatus("IterL3MuonNoID_Phi", 1);
+    chain->SetBranchAddress("IterL3MuonNoID_Phi", &IterL3MuonNoID_Phi);
+
+    chain->SetBranchStatus("IterL3MuonNoID_Charge", 1);
+    chain->SetBranchAddress("IterL3MuonNoID_Charge", &IterL3MuonNoID_Charge);
+
+    chain->SetBranchStatus("IterL3MuonNoID_IsGLB", 1);
+    chain->SetBranchAddress("IterL3MuonNoID_IsGLB", &IterL3MuonNoID_IsGLB);
+
+    chain->SetBranchStatus("IterL3MuonNoID_IsSTA", 1);
+    chain->SetBranchAddress("IterL3MuonNoID_IsSTA", &IterL3MuonNoID_IsSTA);
+
+    chain->SetBranchStatus("IterL3MuonNoID_IsTRK", 1);
+    chain->SetBranchAddress("IterL3MuonNoID_IsTRK", &IterL3MuonNoID_IsTRK);
   }
 
 };
