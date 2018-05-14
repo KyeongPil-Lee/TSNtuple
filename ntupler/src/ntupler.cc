@@ -631,6 +631,7 @@ void ntupler::Make_Branch()
   this->ntuple->Branch("IterL3MuonNoID_Pt", &IterL3MuonNoID_Pt, "IterL3MuonNoID_Pt[nIterL3_FromL2]/D");
   this->ntuple->Branch("IterL3MuonNoID_Eta", &IterL3MuonNoID_Eta, "IterL3MuonNoID_Eta[nIterL3_FromL2]/D");
   this->ntuple->Branch("IterL3MuonNoID_Phi", &IterL3MuonNoID_Phi, "IterL3MuonNoID_Phi[nIterL3_FromL2]/D");
+  this->ntuple->Branch("IterL3MuonNoID_Charge", &IterL3MuonNoID_Charge, "IterL3MuonNoID_Charge[nIterL3_FromL2]/D");
   this->ntuple->Branch("IterL3MuonNoID_IsGLB", &IterL3MuonNoID_IsGLB, "IterL3MuonNoID_IsGLB[nIterL3_FromL2]/I");
   this->ntuple->Branch("IterL3MuonNoID_IsSTA", &IterL3MuonNoID_IsSTA, "IterL3MuonNoID_IsSTA[nIterL3_FromL2]/I");
   this->ntuple->Branch("IterL3MuonNoID_IsTRK", &IterL3MuonNoID_IsTRK, "IterL3MuonNoID_IsTRK[nIterL3_FromL2]/I");
