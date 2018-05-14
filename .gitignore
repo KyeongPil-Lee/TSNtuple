@@ -46,7 +46,7 @@ Outputs/
 *.out
 *.app
 
-*.root
+
 *.log
 
 *__init__*
