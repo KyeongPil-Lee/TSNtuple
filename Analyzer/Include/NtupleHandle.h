@@ -177,6 +177,7 @@ public:
     this->TurnOnBranches_HLT();
     this->TurnOnBranches_Muon();
     this->TurnOnBranches_HLTRerunObject();
+    this->TurnOnBranches_IterL3_FromL2();
   }
 
   void GetEvent(Int_t i_event )
