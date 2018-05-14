@@ -97,6 +97,7 @@ public:
     isValid_ = kFALSE;
     mass_ = -999;
     nVtx_ = -999;
+    isPassingProbe_ = kFALSE;
   }
 
   // -- user-defined tag condition
