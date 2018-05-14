@@ -1,8 +1,8 @@
 #include <TagProbe/Setting.h>
 #include "MakeHist_IsoMu27OverOffline.h"
 
-void MakeHist_default() {
-  TString type = "default";
+void MakeHist_0p05() {
+  TString type = "0p05";
 
   std::unique_ptr<HistProducer> histProducer( new HistProducer() );
 
