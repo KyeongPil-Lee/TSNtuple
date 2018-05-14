@@ -745,6 +745,27 @@ public:
     return flag;
   }
 
+  Bool_t IsL3MuonMatched( NtupleHandle* ntuple, Double_t maxDR = 0.1 )
+  {
+    Bool_t flag = kFALSE;
+
+    KPEvent event(ntuple);
+
+    for(Int_t i_mu=0; i_mu<event.nL3Muon; i_mu++)
+    {
+      KPL3Muon l3Muon(ntuple, i_mu);
+
+      Double_t dR = this->LVec_P.DeltaR( l3Muon.LVec_P );
+      if( dR < maxDR )
+      {
+        flag = kTRUE;
+        break;
+      }
+    }
+
+    return flag;
+  }
+
   void Init()
   {
     this->dB = 0;
