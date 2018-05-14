@@ -15,6 +15,8 @@ namespace Setting
     "/u/user/kplee/SE_UserHome/SingleMuon/crab_TSNtuple_v20180513_3rdTry_OptimizeOI_0p05/180513_164232/0000/ntuple*.root"
   };
 
+  TString rootFilePath_TEST = "/Users/KyeongPil_Lee/ServiceWorks/MuonHLT/v20180507_v01_UpdateTnPCode/TSNtuple/Analyzer/TagProbe/ExampleCodes/ntuple_9.root";
+
   vector<TString> rootFilePathsForType( TString type )
   {
     vector<TString> rootFilePath_temp(0);
