@@ -545,7 +545,8 @@ public:
   Int_t           IsTight;
   Int_t           IsMedium;
   Int_t           IsLoose;
-  Int_t     IsHighPt;
+  Int_t           IsHighPt;
+  Int_t           IsSoft;
   Double_t        Iso03_sumPt;
   Double_t        Iso03_hadEt;
   Double_t        Iso03_emEt;
@@ -606,6 +607,8 @@ public:
     this->IsTight = ntuple->Muon_IsTight[index];
     this->IsMedium = ntuple->Muon_IsMedium[index];
     this->IsLoose = ntuple->Muon_IsLoose[index];
+    this->IsHighPt = ntuple->Muon_IsHighPt[index];
+    this->IsSoft = ntuple->Muon_IsSoft[index];
 
     this->Iso03_sumPt = ntuple->Muon_Iso03_sumPt[index];
     this->Iso03_hadEt = ntuple->Muon_Iso03_hadEt[index];
