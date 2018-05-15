@@ -31,10 +31,10 @@ void DrawHistForEachVariable(TString var)
   if( var == "Vtx" ) titleX = "# vtx";
 
   canvasRatio->SetTitle( titleX, "Efficiency", "Ratio to menu v2.1");
-  canvasRatio->SetLegendPosition( 0.60, 0.78, 0.95, 0.95 );
+  canvasRatio->SetLegendPosition( 0.40, 0.82, 0.95, 0.95 );
 
   // canvasRatio->SetRangeX( 0, 500 );
-  canvasRatio->SetRangeY( 0.9, 1.05 );
+  canvasRatio->SetRangeY( 0.8, 1.05 );
   canvasRatio->SetRangeRatio( 0.9, 1.1 );
 
   canvasRatio->Latex_CMSPre();
