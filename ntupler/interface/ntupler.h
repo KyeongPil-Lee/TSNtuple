@@ -195,6 +195,7 @@ private:
   int Muon_IsMedium[ArrSize];
   int Muon_IsLoose[ArrSize];
   int Muon_IsHighPt[ArrSize];
+  int Muon_IsSoft[ArrSize];
 
   double Muon_Iso03_sumPt[ArrSize];
   double Muon_Iso03_hadEt[ArrSize];

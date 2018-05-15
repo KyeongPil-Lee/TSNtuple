@@ -272,6 +272,7 @@ void ntupler::Init()
     this->Muon_IsMedium[i] = 0;
     this->Muon_IsLoose[i] = 0;
     this->Muon_IsHighPt[i] = 0;
+    this->Muon_IsSoft[i] = 0;
 
     this->Muon_Iso03_sumPt[i] = -999;
     this->Muon_Iso03_hadEt[i] = -999;
@@ -514,6 +515,7 @@ void ntupler::Make_Branch()
   this->ntuple->Branch("Muon_IsMedium", &Muon_IsMedium, "Muon_IsMedium[nMuon]/I");
   this->ntuple->Branch("Muon_IsLoose", &Muon_IsLoose, "Muon_IsLoose[nMuon]/I");
   this->ntuple->Branch("Muon_IsHighPt", &Muon_IsHighPt, "Muon_IsHighPt[nMuon]/I");
+  this->ntuple->Branch("Muon_IsSoft", &Muon_IsSoft, "Muon_IsSoft[nMuon]/I");
 
   this->ntuple->Branch("Muon_Iso03_sumPt", &Muon_Iso03_sumPt, "Muon_Iso03_sumPt[nMuon]/D");
   this->ntuple->Branch("Muon_Iso03_hadEt", &Muon_Iso03_hadEt, "Muon_Iso03_hadEt[nMuon]/D");
@@ -677,10 +679,12 @@ void ntupler::Fill_Muon(const edm::Event &iEvent)
       if( mu->isTrackerMuon() ) this->Muon_IsTRK[_nMuon] = 1;
       if( mu->isPFMuon() ) this->Muon_IsPF[_nMuon] = 1;
       // -- defintion of ID functions: http://cmsdoxygen.web.cern.ch/cmsdoxygen/CMSSW_9_4_0/doc/html/da/d18/namespacemuon.html#ac122b2516e5711ce206256d7945473d2 -- //
-      if( muon::isTightMuon( (*mu), pv ) ) this->Muon_IsTight[_nMuon] = 1;
-      if( muon::isMediumMuon( (*mu) ) ) this->Muon_IsMedium[_nMuon] = 1;
-      if( muon::isLooseMuon( (*mu) ) ) this->Muon_IsLoose[_nMuon] = 1;
+      if( muon::isTightMuon( (*mu), pv ) )  this->Muon_IsTight[_nMuon] = 1;
+      if( muon::isMediumMuon( (*mu) ) )     this->Muon_IsMedium[_nMuon] = 1;
+      if( muon::isLooseMuon( (*mu) ) )      this->Muon_IsLoose[_nMuon] = 1;
       if( muon::isHighPtMuon( (*mu), pv ) ) this->Muon_IsHighPt[_nMuon] = 1;
+      // bool muon::isSoftMuon(const reco::Muon& muon, const reco::Vertex& vtx, bool run2016_hip_mitigation)
+      if( muon::isSoftMuon( (*mu), pv, 0) ) this->Muon_IsSoft[_nMuon] = 1;
 
       this->Muon_Iso03_sumPt[_nMuon] = mu->isolationR03().sumPt;
       this->Muon_Iso03_hadEt[_nMuon] = mu->isolationR03().hadEt;
