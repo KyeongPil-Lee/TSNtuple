@@ -13,16 +13,16 @@ void DrawHist() {
 
 void DrawHistForEachVariable(TString var)
 {
-  TString fileName_2017 = "ROOTFile_TnPHist_IsoMu27OverOffline_0p05.root";
-  TString fileName_2018 = "/Users/KyeongPil_Lee/ServiceWorks/MuonHLT/v20180513_v01_OptimizeIO/TSNtuple/Analyzer/TagProbe/v04_IsoMu27OverOffline/ROOTFile_TnPHist_IsoMu27OverOffline_default.root";
+  TString fileName_HLT = "ROOTFile_TnPHist_IsoMu27OverOffline_default.root";
+  TString fileName_reHLT = "../v04_IsoMu27OverOffline/ROOTFile_TnPHist_IsoMu27OverOffline_default.root";
 
-  TGraphAsymmErrors* g_2017 = GetEffGraph(fileName_2017, var);
-  TGraphAsymmErrors* g_2018 = GetEffGraph(fileName_2018, var);
+  TGraphAsymmErrors* g_HLT = GetEffGraph(fileName_HLT, var);
+  TGraphAsymmErrors* g_reHLT = GetEffGraph(fileName_reHLT, var);
 
   // -- canvas with ratio
   PlotTool::GraphCanvaswRatio *canvasRatio = new PlotTool::GraphCanvaswRatio("c_vs"+var, 0, 0);
-  canvasRatio->Register(g_2017, "2017 (Old muon reco.)", kBlack);
-  canvasRatio->Register(g_2018, "2018 (New muon reco.)", kRed);
+  canvasRatio->Register(g_HLT, "HLT", kBlack);
+  canvasRatio->Register(g_reHLT, "re-HLT", kRed);
 
   TString titleX = "";
   if( var == "Pt" )  titleX = "P_{T}(#mu) [GeV]";
@@ -30,11 +30,11 @@ void DrawHistForEachVariable(TString var)
   if( var == "Phi" ) titleX = "#phi(#mu)";
   if( var == "Vtx" ) titleX = "# vtx";
 
-  canvasRatio->SetTitle( titleX, "Efficiency", "2018/2017");
+  canvasRatio->SetTitle( titleX, "Efficiency", "re-HLT/HLT");
   canvasRatio->SetLegendPosition( 0.60, 0.78, 0.95, 0.95 );
 
   // canvasRatio->SetRangeX( 0, 500 );
-  canvasRatio->SetRangeY( 0.9, 1.05 );
+  canvasRatio->SetRangeY( 0.6, 1.1 );
   canvasRatio->SetRangeRatio( 0.9, 1.1 );
 
   canvasRatio->Latex_CMSPre();
