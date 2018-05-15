@@ -26,7 +26,7 @@ def customizerForNtuplerHLT(process, newProcessName = "MYHLT"):
           process.ntupler.L1Muon = cms.untracked.InputTag("gmtStage2Digis", "Muon", "RECO")
           process.ntupler.MyTriggerResults = cms.untracked.InputTag("TriggerResults")
           process.ntupler.MyTriggerEvent = cms.untracked.InputTag("hltTriggerSummaryAOD")
-          process.ntupler.LumiScaler = cms.untracked.InputTag("hltScalersRawToDigi")
+          process.ntupler.LumiScaler = cms.untracked.InputTag("scalersRawToDigi") # -- same with OfflineLumiScaler
 
         process.TFileService = cms.Service("TFileService",
           fileName = cms.string("ntuple.root"),
