@@ -251,7 +251,7 @@ private:
 class TnPHistProducer {
 public:
   TnPHistProducer() {
-    Init();
+    // Init();
   }
 
   ~TnPHistProducer() {
@@ -264,6 +264,7 @@ public:
 
   void Set_ptCut( Double_t ptCut ) {
     ptCut_ = ptCut;
+    Init();
   }
 
   void Fill( TnPPairBase* pair, Double_t weight = 1.0 ) {
