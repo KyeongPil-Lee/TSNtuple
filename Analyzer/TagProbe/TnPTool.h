@@ -379,6 +379,17 @@ public:
     TEfficiency *TEff = new TEfficiency(*h_nPass, *h_nTotal);
     TGraphAsymmErrors *gEff = (TGraphAsymmErrors*)TEff->CreateGraph()->Clone();
 
+    Int_t nPoint = gEff->GetN();
+    if( nBin != nPoint )
+    {
+      cout << "===== TnPEffTool::SetCutAndCountRange =====" << endl;
+      cout << "nBin = " << nBin << ", nPoint: " << nPoint << endl;
+      cout << "nBin != nPoint ... Denominator of some bins is 0" << endl;
+      cout << "so some points are ignored in the output graph: be careful to interpret" << endl;
+      cout << "===========================================" << endl;
+    }
+
+
     for(Int_t i=0; i<nBin; i++) {
       Int_t i_bin = i+1;
       Double_t nEventPass = h_nPass->GetBinContent(i_bin);
@@ -388,9 +399,9 @@ public:
       gEff->GetPoint(i, binCenter, eff);
 
       Double_t effErrHigh = gEff->GetErrorYhigh(i);
-      Double_t relEffErrHigh = (effErrHigh / eff) * 100;
+      Double_t relEffErrHigh = (effErrHigh / eff) * 100.0;
       Double_t effErrLow = gEff->GetErrorYlow(i);
-      Double_t relEffErrLow = (effErrLow / eff) * 100;
+      Double_t relEffErrLow = (effErrLow / eff) * 100.0;
 
       printf("[%02d bin] (%6.1lf to %6.1lf): eff (%8.1lf / %8.1lf) = %.3lf + %.3lf(%.3lf%%) - %.3lf(%.3lf%%)\n",
               i_bin, hEffTemp->GetBinLowEdge(i_bin), hEffTemp->GetBinLowEdge(i_bin+1), nEventPass, nEventTotal, eff, effErrHigh, relEffErrHigh, effErrLow, relEffErrLow);
