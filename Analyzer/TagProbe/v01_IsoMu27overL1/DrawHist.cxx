@@ -33,11 +33,14 @@ void DrawHistForEachVariable(TString var)
   canvasRatio->SetTitle( titleX, "Efficiency", "Ratio to menu v2.1");
   canvasRatio->SetLegendPosition( 0.40, 0.82, 0.95, 0.95 );
 
+
   // canvasRatio->SetRangeX( 0, 500 );
   canvasRatio->SetRangeY( 0.8, 1.05 );
   canvasRatio->SetRangeRatio( 0.9, 1.1 );
 
   canvasRatio->Latex_CMSPre();
+  // -- https://cmswbm.cern.ch/cmsdb/servlet/RunSummary?RUN=316110
+  canvasRatio->RegisterLatex( 0.67, 0.96, "#font[42]{#scale[0.7]{Run316110 (79 pb^{-1})}}");
   canvasRatio->RegisterLatex( 0.16, 0.91, "#font[42]{#scale[0.6]{IsoMu27 / L1}}");
 
   canvasRatio->Draw();
