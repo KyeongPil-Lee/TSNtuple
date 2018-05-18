@@ -786,11 +786,11 @@ void ntupler::Fill_HLT(const edm::Event &iEvent)
       std::string PathName = TrigNames.triggerName(itrig);
 
       if( PathName.find("HLT_IsoMu") != std::string::npos ||
-        PathName.find("HLT_Mu45") != std::string::npos ||
-        PathName.find("HLT_Mu5") != std::string::npos ||
-        PathName.find("HLT_TkMu5") != std::string::npos ||
+        PathName.find("HLT_Mu") != std::string::npos ||
+        PathName.find("HLT_OldMu") != std::string::npos ||
+        PathName.find("HLT_TkMu") != std::string::npos ||
         PathName.find("HLT_IsoTkMu") != std::string::npos ||
-        PathName.find("HLT_Mu17") != std::string::npos ||
+        PathName.find("HLT_DoubleMu") != std::string::npos ||
         PathName.find("HLT_Mu8_T") != std::string::npos ) this->vec_FiredTrigger.push_back( PathName );
     } // -- if fired -- //
   } // -- iteration over all trigger names -- //
@@ -842,11 +842,11 @@ void ntupler::Fill_MYHLT(const edm::Event &iEvent)
       std::string PathName = TrigNames.triggerName(itrig);
 
       if( PathName.find("HLT_IsoMu") != std::string::npos ||
-        PathName.find("HLT_Mu45") != std::string::npos ||
-        PathName.find("HLT_Mu5") != std::string::npos ||
-        PathName.find("HLT_TkMu5") != std::string::npos ||
+        PathName.find("HLT_Mu") != std::string::npos ||
+        PathName.find("HLT_OldMu") != std::string::npos ||
+        PathName.find("HLT_TkMu") != std::string::npos ||
         PathName.find("HLT_IsoTkMu") != std::string::npos ||
-        PathName.find("HLT_Mu17") != std::string::npos ||
+        PathName.find("HLT_DoubleMu") != std::string::npos ||
         PathName.find("HLT_Mu8_T") != std::string::npos ) this->vec_MyFiredTrigger.push_back( PathName );
     } // -- if fired -- //
   } // -- iteration over all trigger names -- //
