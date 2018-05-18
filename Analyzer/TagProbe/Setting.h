@@ -40,7 +40,15 @@ namespace Setting
     "/pnfs/knu.ac.kr/data/cms/store/user/kplee/SingleMuon/crab_TSNtuple_v20180515_Run316110_2p0e34_OptimizeOI_50Percent/180515_102516/0000/ntuple*.root"
   };
 
-  TString rootFilePath_TEST = "/Users/KyeongPil_Lee/ServiceWorks/MuonHLT/v20180507_v01_UpdateTnPCode/TSNtuple/Analyzer/TagProbe/ExampleCodes/ntuple_9.root";
+  vector<TString> rootFilePaths_test = \
+  {
+    "/Users/KyeongPil_Lee/ServiceWorks/MuonHLT/v20180507_v01_UpdateTnPCode/TSNtuple/Analyzer/TagProbe/ExampleCodes/ntuple_9.root"
+  };
+
+  vector<TString> rootFilePaths_test2 = \
+  {
+    "/Users/KyeongPil_Lee/ServiceWorks/MuonHLT/v20180507_v01_UpdateTnPCode/TSNtuple/Analyzer/TagProbe/ExampleCodes/ntuple_9.root"
+  };
 
   vector<TString> rootFilePathsForType( TString type )
   {
@@ -66,6 +74,12 @@ namespace Setting
 
     else if( type == "50" )
       return Setting::rootFilePaths_50;
+
+    else if( type == "test" )
+      return Setting::rootFilePaths_test;
+
+    else if( type == "test2" )
+      return Setting::rootFilePaths_test2;
     
     else
       std::cout << "No corresponding rootFilePath! ... return NULL vector" << std::endl;
