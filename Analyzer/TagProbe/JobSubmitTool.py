@@ -17,9 +17,11 @@ class JobSubmitTool:
         self._PrintVar()
 
         dirPath = self._CreateTempWorkSpace()
-        self._WriteScriptAndSubmit(dirPath)
+        logFilePath = self._WriteScriptAndSubmit(dirPath)
 
-        print "Job is submitted"
+        print "Job is submitted: "
+        print "log file: %s" % logFilePath
+        print "\n"
 
     def _CreateTempWorkSpace(self):
         dirName = '%s_%s_%s' % (TIME, self.code.split(".")[0], self.scenario)
@@ -77,6 +79,9 @@ echo "*.root files are moved to {_outputPath}"
         #     print "Job is still running"
 
         os.chdir(cwd) # -- back to original directory
+
+        logFilePath = "%s/%s" % (path, logFileName)
+        return logFilePath
 
     def _CheckVar(self):
         if self.code == "" or self.scenario == "" or self.outputPath == "":
