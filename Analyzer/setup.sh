@@ -10,6 +10,9 @@ export KP_INCLUDE_PATH=$KP_ANALYZER_PATH/Include
 # -- root setup -- #
 export ROOT_INCLUDE_PATH=${KP_ANALYZER_PATH}:${ROOT_INCLUDE_PATH}
 
+# -- python setup -- #
+export PYTHONPATH=${KP_ANALYZER_PATH}:${PYTHONPATH}
+
 # -- ntuple path -- #
 export KP_DATA_PATH=""
 if [[ "tamsa2.snu.ac.kr" == $HOSTNAME ]] || [[ "compute-" =~ "$HOSTNAME" ]]; # -- 147.47.242.67 -- # 
@@ -30,3 +33,20 @@ elif [ "muon" == $HOSTNAME ];
 then
 	KP_DATA_PATH=/scratch/kplee/TriggerStudyNtuple
 fi
+
+# -- temporary path for intermediate products
+export KP_TEMP_PATH=""
+echo $HOME
+if [ "/Users/KyeongPil_Lee" == $HOME ]; then # --personal laptop
+	KP_TEMP_PATH=/Users/KyeongPil_Lee/Temp/TSNtuple
+elif [ "knu.ac.kr" =~ $HOME ]; then
+	KP_TEMP_PATH=/d3/scratch/kplee/temp/TSNtuple
+fi
+
+echo "======= TSNtuple/Analzer ======="
+echo "KP_ANALYZER_PATH:  " $KP_ANALYZER_PATH
+echo "ROOT_INCLUDE_PATH: " $ROOT_INCLUDE_PATH
+echo "PYTHONPATH:        " $PYTHONPATH
+echo "KP_DATA_PATH:      " $KP_DATA_PATH
+echo "KP_TEMP_PATH:      " $KP_TEMP_PATH
+echo "==============================="
