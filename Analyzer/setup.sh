@@ -36,10 +36,9 @@ fi
 
 # -- temporary path for intermediate products
 export KP_TEMP_PATH=""
-echo $HOME
 if [ "/Users/KyeongPil_Lee" == $HOME ]; then # --personal laptop
 	KP_TEMP_PATH=/Users/KyeongPil_Lee/Temp/TSNtuple
-elif [ "knu.ac.kr" =~ $HOME ]; then
+elif [ "cms.knu.ac.kr" == $HOSTNAME ]; then
 	KP_TEMP_PATH=/d3/scratch/kplee/temp/TSNtuple
 fi
 
