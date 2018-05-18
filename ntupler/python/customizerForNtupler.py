@@ -1,3 +1,8 @@
+# -- custoimzer for ntupler that can be added to the HLT configuration for re-running HLT
+# -- add two lines in the HLT config.:
+# from TSNtuple.ntupler.customizerForNtupler import *
+# customizerForNtuplerHLT(process, "MYHLT")
+
 import FWCore.ParameterSet.Config as cms
 
 def customizerForNtuplerHLT(process, newProcessName = "MYHLT"):
