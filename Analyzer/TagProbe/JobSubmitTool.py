@@ -1,5 +1,7 @@
 import os, sys, time
 import subprocess
+from shutil import copy2
+
 TIME = time.strftime('%Y%m%d_%H%M%S', time.localtime(time.time())) # -- ex> 20180517_152233
 
 class JobSubmitTool:
@@ -32,9 +34,15 @@ class JobSubmitTool:
 
         os.mkdir( dirPath )
 
-        # -- copy also .h files
-        cmd_cp = "cp %s *.h %s" % (self.code, dirPath)
-        os.system(cmd_cp)
+        # -- copy codes to temp. directory
+        copy2( self.code, dirPath )
+        for fileName in os.listdir('.'):
+            if fileName.endswith('.h'): # -- also copy any header file
+                copy2( fileName, dirPath )
+
+        # # -- copy also .h files
+        # cmd_cp = "cp %s *.h %s" % (self.code, dirPath)
+        # os.system(cmd_cp)
 
         return dirPath
 
@@ -43,7 +51,7 @@ class JobSubmitTool:
         filePath = '%s/%s' % (path, fileName)
 
         rootCMD = "root -l -b -q '%s(\"%s\")'" % (self.code, self.scenario)
-        if self.doCompile: rootCMD.replace(".cxx", ".cxx++")
+        if self.doCompile: rootCMD = rootCMD.replace(".cxx", ".cxx++")
         cpCMD = "cp *.root %s" % (self.outputPath)
         f = open(filePath, 'w')
 
@@ -66,17 +74,10 @@ echo "*.root files are moved to {_outputPath}"
         cwd = os.getcwd()
         os.chdir(path) # -- move to temp directory
 
-        # runCMD = 'source %s >&%s&' % (fileName, fileName.replace(".sh", ".log"))
-        # os.system(runCMD)
-
         runCMD = 'source %s' % fileName
         logFileName = fileName.replace(".sh", ".log")
         f_log = open(logFileName, "w")
-        subProc = subprocess.Popen(runCMD, stdout=f_log, stderr=f_log, shell=True)
-        # if subProc.poll is not None:
-        #     print "Job is finished"
-        # else:
-        #     print "Job is still running"
+        subProc = subprocess.Popen(runCMD, stdout=f_log, stderr=f_log, shell=True, executable='/bin/bash') # -- bash shell should be specified (in case of KNU)
 
         os.chdir(cwd) # -- back to original directory
 
