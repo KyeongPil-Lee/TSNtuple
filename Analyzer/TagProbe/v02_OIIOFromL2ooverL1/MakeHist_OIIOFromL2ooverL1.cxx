@@ -1,9 +1,7 @@
 #include <TagProbe/Setting.h>
 #include "MakeHist_OIIOFromL2ooverL1.h"
 
-void MakeHist_default() {
-  TString type = "default";
-
+void MakeHist_OIIOFromL2ooverL1(TString type) {
   std::unique_ptr<HistProducer> histProducer( new HistProducer() );
 
   histProducer->SetOutputFileName("ROOTFile_TnPHist_OIIOFromL2ooverL1_"+type+".root");
