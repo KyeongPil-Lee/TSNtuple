@@ -1,12 +1,10 @@
 #include <TagProbe/Setting.h>
-#include "MakeHist_IsoMu27OverOffline.h"
+#include "MakeHist_L3MuonOverL1.h"
 
-void MakeHist_default() {
-  TString type = "default";
-
+void MakeHist_L3MuonOverL1(TString type) {
   std::unique_ptr<HistProducer> histProducer( new HistProducer() );
 
-  histProducer->SetOutputFileName("ROOTFile_TnPHist_IsoMu27OverOffline_"+type+".root");
+  histProducer->SetOutputFileName("ROOTFile_TnPHist_L3MuonOverL1_"+type+".root");
 
   vector<TString> rootFilePaths = Setting::rootFilePathsForType( type );
   for( const auto& rootFilePath : rootFilePaths )

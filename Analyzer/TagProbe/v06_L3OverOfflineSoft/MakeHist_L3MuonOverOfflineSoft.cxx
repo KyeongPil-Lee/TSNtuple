@@ -1,9 +1,7 @@
 #include <TagProbe/Setting.h>
 #include "MakeHist_L3MuonOverOfflineSoft.h"
 
-void MakeHist_default() {
-  TString type = "default";
-
+void MakeHist_L3MuonOverOfflineSoft(TString type) {
   std::unique_ptr<HistProducer> histProducer( new HistProducer() );
 
   histProducer->SetOutputFileName("ROOTFile_TnPHist_L3MuonOverOfflineSoft_"+type+".root");
