@@ -457,6 +457,187 @@ public:
   }
 };
 
+class KPIterL3MuonOI: public KPObject
+{
+public:
+  Double_t Charge;
+
+  Double_t Inner_Pt;
+  Double_t Inner_Eta;
+  Double_t Inner_Phi;
+  Double_t Inner_Charge;
+
+  Double_t Outer_Pt;
+  Double_t Outer_Eta;
+  Double_t Outer_Phi;
+  Double_t Outer_Charge;
+
+  Double_t Global_Pt;
+  Double_t Global_Eta;
+  Double_t Global_Phi;
+  Double_t Global_Charge;
+
+
+  KPIterL3MuonOI(): KPObject() { this->Init(); }
+
+  KPIterL3MuonOI(NtupleHandle* ntuple, Int_t index)
+  {
+    this->Flag_IsNonNull = kTRUE;
+    this->Fill(ntuple, index);
+  }
+
+  void Fill(NtupleHandle* ntuple, Int_t index)
+  {
+    Inner_Pt = ntuple->IterL3OI_TK_Pt[index];
+    Inner_Eta = ntuple->IterL3OI_TK_Eta[index];
+    Inner_Phi = ntuple->IterL3OI_TK_Phi[index];
+    Inner_Charge = ntuple->IterL3OI_TK_Charge[index];
+
+    Outer_Pt = ntuple->IterL3OI_SA_Pt[index];
+    Outer_Eta = ntuple->IterL3OI_SA_Eta[index];
+    Outer_Phi = ntuple->IterL3OI_SA_Phi[index];
+    Outer_Charge = ntuple->IterL3OI_SA_Charge[index];
+
+    Global_Pt = ntuple->IterL3OI_GL_Pt[index];
+    Global_Eta = ntuple->IterL3OI_GL_Eta[index];
+    Global_Phi = ntuple->IterL3OI_GL_Phi[index];
+    Global_Charge = ntuple->IterL3OI_GL_Charge[index];
+
+    // -- default Pt: inner track info.
+    this->Pt = Inner_Pt;
+    this->Eta = Inner_Eta;
+    this->Phi = Inner_Phi;
+    this->LVec_P.SetPtEtaPhiM( this->Pt, this->Eta, this->Phi, M_Mu );
+
+    this->Charge = Inner_Charge;
+  }
+
+  void Init()
+  {
+    Charge = -999;
+
+    Inner_Pt = -999;
+    Inner_Eta = -999;
+    Inner_Phi = -999;
+    Inner_Charge = -999;
+
+    Outer_Pt = -999;
+    Outer_Eta = -999;
+    Outer_Phi = -999;
+    Outer_Charge = -999;
+
+    Global_Pt = -999;
+    Global_Eta = -999;
+    Global_Phi = -999;
+    Global_Charge = -999;
+  }
+};
+
+class KPIterL3MuonIOFromL2: public KPObject
+{
+public:
+  Double_t Charge;
+
+  Double_t Inner_Pt;
+  Double_t Inner_Eta;
+  Double_t Inner_Phi;
+  Double_t Inner_Charge;
+
+  Double_t Outer_Pt;
+  Double_t Outer_Eta;
+  Double_t Outer_Phi;
+  Double_t Outer_Charge;
+
+  Double_t Global_Pt;
+  Double_t Global_Eta;
+  Double_t Global_Phi;
+  Double_t Global_Charge;
+
+
+  KPIterL3MuonIOFromL2(): KPObject() { this->Init(); }
+
+  KPIterL3MuonIOFromL2(NtupleHandle* ntuple, Int_t index)
+  {
+    this->Flag_IsNonNull = kTRUE;
+    this->Fill(ntuple, index);
+  }
+
+  void Fill(NtupleHandle* ntuple, Int_t index)
+  {
+    Inner_Pt = ntuple->IterL3IO_L2Seeded_TK_Pt[index];
+    Inner_Eta = ntuple->IterL3IO_L2Seeded_TK_Eta[index];
+    Inner_Phi = ntuple->IterL3IO_L2Seeded_TK_Phi[index];
+    Inner_Charge = ntuple->IterL3IO_L2Seeded_TK_Charge[index];
+
+    Outer_Pt = ntuple->IterL3IO_L2Seeded_SA_Pt[index];
+    Outer_Eta = ntuple->IterL3IO_L2Seeded_SA_Eta[index];
+    Outer_Phi = ntuple->IterL3IO_L2Seeded_SA_Phi[index];
+    Outer_Charge = ntuple->IterL3IO_L2Seeded_SA_Charge[index];
+
+    Global_Pt = ntuple->IterL3IO_L2Seeded_GL_Pt[index];
+    Global_Eta = ntuple->IterL3IO_L2Seeded_GL_Eta[index];
+    Global_Phi = ntuple->IterL3IO_L2Seeded_GL_Phi[index];
+    Global_Charge = ntuple->IterL3IO_L2Seeded_GL_Charge[index];
+
+    // -- default Pt: inner track info.
+    this->Pt = Inner_Pt;
+    this->Eta = Inner_Eta;
+    this->Phi = Inner_Phi;
+    this->LVec_P.SetPtEtaPhiM( this->Pt, this->Eta, this->Phi, M_Mu );
+
+    this->Charge = Inner_Charge;
+  }
+
+  void Init()
+  {
+    Charge = -999;
+
+    Inner_Pt = -999;
+    Inner_Eta = -999;
+    Inner_Phi = -999;
+    Inner_Charge = -999;
+
+    Outer_Pt = -999;
+    Outer_Eta = -999;
+    Outer_Phi = -999;
+    Outer_Charge = -999;
+
+    Global_Pt = -999;
+    Global_Eta = -999;
+    Global_Phi = -999;
+    Global_Charge = -999;
+  }
+};
+
+class KPIterL3MuonIOFromL1: public KPObject
+{
+public:
+  Double_t Charge;
+
+  KPIterL3MuonIOFromL1(): KPObject() { this->Init(); }
+
+  KPIterL3MuonIOFromL1(NtupleHandle* ntuple, Int_t index)
+  {
+    this->Flag_IsNonNull = kTRUE;
+    this->Fill(ntuple, index);
+  }
+
+  void Fill(NtupleHandle* ntuple, Int_t index)
+  {
+    this->Pt = ntuple->IterL3IO_FromL1_Pt[index];
+    this->Eta = ntuple->IterL3IO_FromL1_Eta[index];
+    this->Phi = ntuple->IterL3IO_FromL1_Phi[index];
+    this->LVec_P.SetPtEtaPhiM( this->Pt, this->Eta, this->Phi, M_Mu );
+
+    this->Charge = ntuple->IterL3IO_FromL1_Charge[index];
+  }
+
+  void Init()
+  {
+    this->Charge = 0;
+  }
+};
+
 class KPIterL3MuonFromL2: public KPObject
 {
 public:
@@ -533,6 +714,45 @@ public:
   }
 };
 
+class KPIterL3MuonNoID: public KPObject
+{
+public:
+  Double_t Charge;
+  Int_t IsGLB;
+  Int_t IsSTA;
+  Int_t IsTRK;
+
+  KPIterL3MuonNoID(): KPObject() { this->Init(); }
+
+  KPIterL3MuonNoID(NtupleHandle* ntuple, Int_t index)
+  {
+    this->Flag_IsNonNull = kTRUE;
+    this->Fill(ntuple, index);
+  }
+
+  void Fill(NtupleHandle* ntuple, Int_t index)
+  {
+    this->Pt = ntuple->IterL3MuonNoID_Pt[index];
+    this->Eta = ntuple->IterL3MuonNoID_Eta[index];
+    this->Phi = ntuple->IterL3MuonNoID_Phi[index];
+    this->LVec_P.SetPtEtaPhiM( this->Pt, this->Eta, this->Phi, M_Mu );
+
+    this->Charge = ntuple->IterL3MuonNoID_Charge[index];
+
+    this->IsGLB = ntuple->IterL3MuonNoID_IsGLB[index];
+    this->IsSTA = ntuple->IterL3MuonNoID_IsSTA[index];
+    this->IsTRK = ntuple->IterL3MuonNoID_IsTRK[index];
+  }
+
+  void Init()
+  {
+    this->Charge = 0;
+    this->IsGLB = 0;
+    this->IsSTA = 0;
+    this->IsTRK = 0;
+  }
+};
+
 class KPMuon: public KPObject
 {
 public:
@@ -545,8 +765,7 @@ public:
   Int_t           IsTight;
   Int_t           IsMedium;
   Int_t           IsLoose;
-  Int_t           IsHighPt;
-  Int_t           IsSoft;
+  Int_t     IsHighPt;
   Double_t        Iso03_sumPt;
   Double_t        Iso03_hadEt;
   Double_t        Iso03_emEt;
@@ -607,8 +826,6 @@ public:
     this->IsTight = ntuple->Muon_IsTight[index];
     this->IsMedium = ntuple->Muon_IsMedium[index];
     this->IsLoose = ntuple->Muon_IsLoose[index];
-    this->IsHighPt = ntuple->Muon_IsHighPt[index];
-    this->IsSoft = ntuple->Muon_IsSoft[index];
 
     this->Iso03_sumPt = ntuple->Muon_Iso03_sumPt[index];
     this->Iso03_hadEt = ntuple->Muon_Iso03_hadEt[index];
