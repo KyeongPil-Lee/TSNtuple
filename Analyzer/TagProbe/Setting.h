@@ -7,37 +7,37 @@ namespace Setting
 {
   vector<TString> rootFilePaths_default = \
   {
-    "/pnfs/knu.ac.kr/data/cms/store/user/kplee/SingleMuon/crab_TSNtuple_v20180515_Run316110_2p0e34_OptimizeOI_Default/180515_102355/0000/ntuple*.root"
+    "/home/kplee/data1/TSNtuple/v20180523_Run305636_BadPixel_L1Emul_OptimizeOI/default/*.root"
   };
 
   vector<TString> rootFilePaths_0p05 = \
   {
-    "/pnfs/knu.ac.kr/data/cms/store/user/kplee/SingleMuon/crab_TSNtuple_v20180515_Run316110_2p0e34_OptimizeOI_0p05ForAll/180515_102409/0000/ntuple*.root"
+    "/home/kplee/data1/TSNtuple/v20180523_Run305636_BadPixel_L1Emul_OptimizeOI/0p05ForAll/*.root"
   };
 
   vector<TString> rootFilePaths_90 = \
   {
-    "/pnfs/knu.ac.kr/data/cms/store/user/kplee/SingleMuon/crab_TSNtuple_v20180515_Run316110_2p0e34_OptimizeOI_90Percent/180515_102422/0000/ntuple*.root"
+    "/home/kplee/data1/TSNtuple/v20180523_Run305636_BadPixel_L1Emul_OptimizeOI/90Percent/*.root"
   };
 
   vector<TString> rootFilePaths_80 = \
   {
-    "/pnfs/knu.ac.kr/data/cms/store/user/kplee/SingleMuon/crab_TSNtuple_v20180515_Run316110_2p0e34_OptimizeOI_80Percent/180515_102436/0000/ntuple*.root"
+    "/home/kplee/data1/TSNtuple/v20180523_Run305636_BadPixel_L1Emul_OptimizeOI/80Percent/*.root"
   };
 
   vector<TString> rootFilePaths_70 = \
   {
-    "/pnfs/knu.ac.kr/data/cms/store/user/kplee/SingleMuon/crab_TSNtuple_v20180515_Run316110_2p0e34_OptimizeOI_70Percent/180515_102450/0000/ntuple*.root"
+    "/home/kplee/data1/TSNtuple/v20180523_Run305636_BadPixel_L1Emul_OptimizeOI/70Percent/*.root"
   };
 
   vector<TString> rootFilePaths_60 = \
   {
-    "/pnfs/knu.ac.kr/data/cms/store/user/kplee/SingleMuon/crab_TSNtuple_v20180515_Run316110_2p0e34_OptimizeOI_60Percent/180515_102503/0000/ntuple*.root"
+    "/home/kplee/data1/TSNtuple/v20180523_Run305636_BadPixel_L1Emul_OptimizeOI/60Percent/*.root"
   };
 
   vector<TString> rootFilePaths_50 = \
   {
-    "/pnfs/knu.ac.kr/data/cms/store/user/kplee/SingleMuon/crab_TSNtuple_v20180515_Run316110_2p0e34_OptimizeOI_50Percent/180515_102516/0000/ntuple*.root"
+    "/home/kplee/data1/TSNtuple/v20180523_Run305636_BadPixel_L1Emul_OptimizeOI/50Percent/*.root"
   };
 
   vector<TString> rootFilePaths_test = \
