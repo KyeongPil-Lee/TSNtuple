@@ -13,13 +13,13 @@ void DrawHist() {
 
 void DrawHistForEachVariable(TString var)
 {
-  TString fileName_default = "ROOTFile_TnPHist_IsoMu27overL1_default.root";
-  TString fileName_90 = "ROOTFile_TnPHist_IsoMu27overL1_90.root";
-  TString fileName_80 = "ROOTFile_TnPHist_IsoMu27overL1_80.root";
-  TString fileName_70 = "ROOTFile_TnPHist_IsoMu27overL1_70.root";
-  TString fileName_60 = "ROOTFile_TnPHist_IsoMu27overL1_60.root";
-  TString fileName_50 = "ROOTFile_TnPHist_IsoMu27overL1_50.root";
-  TString fileName_0p05 = "ROOTFile_TnPHist_IsoMu27overL1_0p05.root";
+  TString fileName_default = "ROOTFile_TnPHist_L3MuonOverOfflineSoft_default.root";
+  TString fileName_90 = "ROOTFile_TnPHist_L3MuonOverOfflineSoft_90.root";
+  TString fileName_80 = "ROOTFile_TnPHist_L3MuonOverOfflineSoft_80.root";
+  TString fileName_70 = "ROOTFile_TnPHist_L3MuonOverOfflineSoft_70.root";
+  TString fileName_60 = "ROOTFile_TnPHist_L3MuonOverOfflineSoft_60.root";
+  TString fileName_50 = "ROOTFile_TnPHist_L3MuonOverOfflineSoft_50.root";
+  TString fileName_0p05 = "ROOTFile_TnPHist_L3MuonOverOfflineSoft_0p05.root";
 
 
   TGraphAsymmErrors* g_default = GetEffGraph(fileName_default, var);
@@ -50,7 +50,7 @@ void DrawHistForEachVariable(TString var)
   canvasRatio->SetLegendPosition( 0.25, 0.32, 0.95, 0.47 );
   canvasRatio->SetLegendColumn(2);
 
-  canvasRatio->SetRangeY( 0.85, 1.05 );
+  canvasRatio->SetRangeY( 0.65, 1.05 );
   if( var == "Pt" ) canvasRatio->SetRangeY( 0, 1.1 );
   canvasRatio->SetRangeRatio( 0.97, 1.03 );
 
@@ -58,9 +58,9 @@ void DrawHistForEachVariable(TString var)
   // -- https://cmswbm.cern.ch/cmsdb/servlet/RunSummary?RUN=316110
   canvasRatio->RegisterLatex( 0.67, 0.96, "#font[42]{#scale[0.7]{Run316110 (79 pb^{-1})}}");
   if( var == "Pt" )
-    canvasRatio->RegisterLatex( 0.16, 0.91, "#font[42]{#scale[0.6]{IsoMu27 / L1}}");
+    canvasRatio->RegisterLatex( 0.16, 0.91, "#font[42]{#scale[0.6]{L3(before filter) / offline(soft)}}");
   else
-    canvasRatio->RegisterLatex( 0.16, 0.91, "#font[42]{#scale[0.6]{IsoMu27 / L1 (P_{T} > 29 GeV)}}");
+    canvasRatio->RegisterLatex( 0.16, 0.91, "#font[42]{#scale[0.6]{L3(before filter) / offline(soft) (P_{T} > 2 GeV)}}");
 
   canvasRatio->Draw();
 }

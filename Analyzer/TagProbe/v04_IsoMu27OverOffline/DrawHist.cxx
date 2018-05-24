@@ -14,15 +14,31 @@ void DrawHist() {
 void DrawHistForEachVariable(TString var)
 {
   TString fileName_default = "ROOTFile_TnPHist_IsoMu27OverOffline_default.root";
+  TString fileName_90 = "ROOTFile_TnPHist_IsoMu27OverOffline_90.root";
+  TString fileName_80 = "ROOTFile_TnPHist_IsoMu27OverOffline_80.root";
+  TString fileName_70 = "ROOTFile_TnPHist_IsoMu27OverOffline_70.root";
+  TString fileName_60 = "ROOTFile_TnPHist_IsoMu27OverOffline_60.root";
+  TString fileName_50 = "ROOTFile_TnPHist_IsoMu27OverOffline_50.root";
   TString fileName_0p05 = "ROOTFile_TnPHist_IsoMu27OverOffline_0p05.root";
 
+
   TGraphAsymmErrors* g_default = GetEffGraph(fileName_default, var);
+  TGraphAsymmErrors* g_90 = GetEffGraph(fileName_90, var);
+  TGraphAsymmErrors* g_80 = GetEffGraph(fileName_80, var);
+  TGraphAsymmErrors* g_70 = GetEffGraph(fileName_70, var);
+  TGraphAsymmErrors* g_60 = GetEffGraph(fileName_60, var);
+  TGraphAsymmErrors* g_50 = GetEffGraph(fileName_50, var);
   TGraphAsymmErrors* g_0p05 = GetEffGraph(fileName_0p05, var);
 
   // -- canvas with ratio
   PlotTool::GraphCanvaswRatio *canvasRatio = new PlotTool::GraphCanvaswRatio("c_vs"+var, 0, 0);
-  canvasRatio->Register(g_default, "Menu v2.1", kBlack);
-  canvasRatio->Register(g_0p05, "Menu v2.1 + #Delta#eta = 0.05 & #Delta#phi = 0.05", kRed);
+  canvasRatio->Register(g_default, "Menu v2.1 (default)", kBlack);
+  canvasRatio->Register(g_90, "default * 90%", kGreen+2);
+  canvasRatio->Register(g_80, "default * 80%", kBlue);
+  canvasRatio->Register(g_70, "default * 70%", kViolet);
+  canvasRatio->Register(g_60, "default * 60%", kCyan);
+  canvasRatio->Register(g_50, "default * 50%", kOrange+2);
+  canvasRatio->Register(g_0p05, "#Delta#eta = 0.05 & #Delta#phi = 0.05", kRed);
 
   TString titleX = "";
   if( var == "Pt" )  titleX = "P_{T}(#mu) [GeV]";
@@ -30,15 +46,21 @@ void DrawHistForEachVariable(TString var)
   if( var == "Phi" ) titleX = "#phi(#mu)";
   if( var == "Vtx" ) titleX = "# vtx";
 
-  canvasRatio->SetTitle( titleX, "Efficiency", "Ratio to menu v2.1");
-  canvasRatio->SetLegendPosition( 0.60, 0.78, 0.95, 0.95 );
+  canvasRatio->SetTitle( titleX, "Efficiency", "Ratio to default");
+  canvasRatio->SetLegendPosition( 0.25, 0.32, 0.95, 0.47 );
+  canvasRatio->SetLegendColumn(2);
 
-  // canvasRatio->SetRangeX( 0, 500 );
-  canvasRatio->SetRangeY( 0.6, 1.1 );
-  canvasRatio->SetRangeRatio( 0.9, 1.1 );
+  canvasRatio->SetRangeY( 0.65, 1.05 );
+  if( var == "Pt" ) canvasRatio->SetRangeY( 0, 1.1 );
+  canvasRatio->SetRangeRatio( 0.97, 1.03 );
 
   canvasRatio->Latex_CMSPre();
-  canvasRatio->RegisterLatex( 0.16, 0.91, "#font[42]{#scale[0.6]{IsoMu27 / Offline}}");
+  // -- https://cmswbm.cern.ch/cmsdb/servlet/RunSummary?RUN=316110
+  canvasRatio->RegisterLatex( 0.67, 0.96, "#font[42]{#scale[0.7]{Run316110 (79 pb^{-1})}}");
+  if( var == "Pt" )
+    canvasRatio->RegisterLatex( 0.16, 0.91, "#font[42]{#scale[0.6]{IsoMu27 / offline}}");
+  else
+    canvasRatio->RegisterLatex( 0.16, 0.91, "#font[42]{#scale[0.6]{IsoMu27 / offline (P_{T} > 29 GeV)}}");
 
   canvasRatio->Draw();
 }
