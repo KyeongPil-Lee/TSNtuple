@@ -719,7 +719,7 @@ public:
       g->SetTitle("");
 
       if( i == 0 ) PlotTool::SetAxis_TopPad( g->GetXaxis(), g->GetYaxis(), titleY_ );
-      if( setRangeX_ ) g->GetXaxis()->SetRangeUser( minX_, maxX_ );
+      if( setRangeX_ ) g->GetXaxis()->SetLimits( minX_, maxX_ );
       if( setRangeY_ ) g->GetYaxis()->SetRangeUser( minY_, maxY_ );
 
       legend->AddEntry( g, legendName );
@@ -755,6 +755,7 @@ public:
       g_ratio->SetTitle("");
 
       if( i == 0 ) SetAxis_BottomPad(g_ratio->GetXaxis(), g_ratio->GetYaxis(), titleX_, titleRatio_);
+      if( setRangeX_ )     g_ratio->GetXaxis()->SetLimits( minX_, maxX_ );
       if( setRangeRatio_ ) g_ratio->GetYaxis()->SetRangeUser( minRatio_, maxRatio_ );
     }
 
