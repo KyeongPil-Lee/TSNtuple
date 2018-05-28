@@ -1,17 +1,18 @@
 #include <TagProbe/TnPTool.h>
 // #include <Include/SimplePlotTools.h>
 
-void DrawHistForEachVariable(TString var);
+void DrawHistForEachVariable(TString var, Bool_t setZoomIn = kFALSE);
 TGraphAsymmErrors* GetEffGraph( TString fileName, TString var );
 
 void DrawHist() {
   DrawHistForEachVariable( "Pt" );
+  DrawHistForEachVariable( "Pt", kTRUE );
   DrawHistForEachVariable( "Eta" );
   DrawHistForEachVariable( "Phi" );
   DrawHistForEachVariable( "Vtx" );
 }
 
-void DrawHistForEachVariable(TString var)
+void DrawHistForEachVariable(TString var, Bool_t setZoomIn = kFALSE)
 {
   TString fileName_default = "ROOTFile_TnPHist_L3MuonOverL1_default.root";
   TString fileName_90 = "ROOTFile_TnPHist_L3MuonOverL1_90.root";
@@ -31,7 +32,9 @@ void DrawHistForEachVariable(TString var)
   TGraphAsymmErrors* g_0p05 = GetEffGraph(fileName_0p05, var);
 
   // -- canvas with ratio
-  PlotTool::GraphCanvaswRatio *canvasRatio = new PlotTool::GraphCanvaswRatio("c_vs"+var, 0, 0);
+  TString canvasName = "c_vs"+var;
+  if( setZoomIn ) canvasName = canvasName + "_zoomIn";
+  PlotTool::GraphCanvaswRatio *canvasRatio = new PlotTool::GraphCanvaswRatio(canvasName, 0, 0);
   canvasRatio->Register(g_default, "Menu v2.1 (default)", kBlack);
   canvasRatio->Register(g_90, "default * 90%", kGreen+2);
   canvasRatio->Register(g_80, "default * 80%", kBlue);
@@ -50,13 +53,14 @@ void DrawHistForEachVariable(TString var)
   canvasRatio->SetLegendPosition( 0.25, 0.32, 0.95, 0.47 );
   canvasRatio->SetLegendColumn(2);
 
+  if( var == "Pt" && setZoomIn ) canvasRatio->SetRangeX(29, 500);
   canvasRatio->SetRangeY( 0.85, 1.05 );
   // if( var == "Pt" ) canvasRatio->SetRangeY( 0, 1.1 );
   canvasRatio->SetRangeRatio( 0.97, 1.03 );
 
   canvasRatio->Latex_CMSPre();
   // -- https://cmswbm.cern.ch/cmsdb/servlet/RunSummary?RUN=316110
-  canvasRatio->RegisterLatex( 0.67, 0.96, "#font[42]{#scale[0.7]{Run316110 (79 pb^{-1})}}");
+  canvasRatio->RegisterLatex( 0.67, 0.96, "#font[42]{#scale[0.7]{Run305636 (92 pb^{-1})}}");
   if( var == "Pt" )
     canvasRatio->RegisterLatex( 0.16, 0.91, "#font[42]{#scale[0.6]{L3(before filter) / L1}}");
   else
