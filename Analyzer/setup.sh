@@ -31,7 +31,7 @@ then
 	
 elif [ "muon" == $HOSTNAME ]; 
 then
-	KP_DATA_PATH=/scratch/kplee/TriggerStudyNtuple
+	KP_DATA_PATH=/scratch/kplee/TSNtuple
 fi
 
 # -- temporary path for intermediate products
@@ -40,6 +40,8 @@ if [ "/Users/KyeongPil_Lee" == $HOME ]; then # --personal laptop
 	KP_TEMP_PATH=/Users/KyeongPil_Lee/Temp/TSNtuple
 elif [ "cms.knu.ac.kr" == $HOSTNAME ]; then
 	KP_TEMP_PATH=/d3/scratch/kplee/temp/TSNtuple
+elif [ "muon" == $HOSTNAME ]; then
+	KP_TEMP_PATH=/scratch/kplee/temp/TSNtuple
 fi
 
 echo "======= TSNtuple/Analzer ======="
