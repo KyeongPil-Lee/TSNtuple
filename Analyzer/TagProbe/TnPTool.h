@@ -288,7 +288,8 @@ private:
 
   void Init() {
     // -- binnig
-    vector<Double_t> vec_PtBinEdge = {0, 10, 15, 20, 22, 24, 26, 27, 28, 30, 40, 50, 60, 80, 120, 200, 500};
+    // vector<Double_t> vec_PtBinEdge = {0, 10, 15, 20, 22, 24, 26, 27, 28, 30, 40, 50, 60, 80, 120, 200, 500};
+    vector<Double_t> vec_PtBinEdge = {0, 2, 4, 5, 6, 8, 10, 15, 20, 25, 30, 40, 50, 60, 80, 120, 200, 500};
     vector<Double_t> vec_HighPtBinEdge = {0, 10, 15, 20, 25, 30, 40, 45, 48, 50, 52, 55, 60, 80, 120, 200, 500};
     vector<Double_t> vec_EtaBinEdge = {-2.4, -2.1, -1.6, -1.2, -0.9, -0.3, -0.2, 0, 0.2, 0.3, 0.9, 1.2, 1.6, 2.1, 2.4};
     Double_t degree15 = 3.141592 / 12.0;
