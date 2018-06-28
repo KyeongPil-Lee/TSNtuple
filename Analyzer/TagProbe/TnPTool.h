@@ -244,6 +244,13 @@ private:
 class TnPHistProducer {
 public:
   TnPHistProducer() {
+    cout << "Default constructor: ptCut = 0! ... " << endl;
+    Set_ptCut( 0 );    
+    Init();
+  }
+
+  TnPHistProducer( Double_t ptCut ) {
+    Set_ptCut( ptCut );
     Init();
   }
 
@@ -253,10 +260,6 @@ public:
     delete TnPHistEta_;
     delete TnPHistPhi_;
     delete TnPHistVtx_;
-  }
-
-  void Set_ptCut( Double_t ptCut ) {
-    ptCut_ = ptCut;
   }
 
   void Fill( TnPPairBase* pair, Double_t weight = 1.0 ) {
@@ -307,6 +310,10 @@ private:
     TnPHistEta_ = new TnPHist("Eta", ptCut_, vec_EtaBinEdge);
     TnPHistPhi_ = new TnPHist("Phi", ptCut_, vec_PhiBinEdge);
     TnPHistVtx_ = new TnPHist("Vtx", ptCut_, vec_VtxBinEdge);
+  }
+
+  void Set_ptCut( Double_t ptCut ) {
+    ptCut_ = ptCut;
   }
 
 };

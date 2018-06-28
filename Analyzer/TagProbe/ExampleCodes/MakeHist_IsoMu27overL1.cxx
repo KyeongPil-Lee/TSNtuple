@@ -75,8 +75,7 @@ class HistProducer {
 
     NtupleHandle* ntuple = new NtupleHandle( chain );
 
-    std::unique_ptr<TnPHistProducer> tnpHist( new TnPHistProducer() );
-    tnpHist->Set_ptCut( minPt_ ); // -- only probes above this pT cut will be filled in histograms -- //
+    std::unique_ptr<TnPHistProducer> tnpHist( new TnPHistProducer(minPt_) );
 
     Int_t nEvent = chain->GetEntries();
     std::cout << "[Total event: " << nEvent << "]" << std::endl;
@@ -140,7 +139,8 @@ private:
 void MakeHist_IsoMu27overL1() {
   std::unique_ptr<HistProducer> histProducer( new HistProducer() );
   histProducer->SetOutputFileName("ROOTFile_TnPHist_example.root");
-  histProducer->AddDataPath("/Users/KyeongPil_Lee/ServiceWorks/MuonHLT/v20180507_v01_UpdateTnPCode/TSNtuple/Analyzer/TagProbe/ExampleCodes/ntuple_9.root");
+  // histProducer->AddDataPath("/Users/KyeongPil_Lee/ServiceWorks/MuonHLT/v20180507_v01_UpdateTnPCode/TSNtuple/Analyzer/TagProbe/ExampleCodes/ntuple_9.root");
+  histProducer->AddDataPath("/home/kplee/data1/TSNtuple/v20180626_NonIsoMuEff_SingleMuon_Run2018Av2_Run316361to2_Menu2p0/ntuple_9.root");
   histProducer->Set_minPt( 29 ); // -- min pT applied for eta, phi and vtx
 
   histProducer->Produce();
