@@ -291,7 +291,7 @@ private:
     // vector<Double_t> vec_PtBinEdge = {0, 10, 15, 20, 22, 24, 26, 27, 28, 30, 40, 50, 60, 80, 120, 200, 500};
     vector<Double_t> vec_PtBinEdge = {0, 2, 4, 5, 6, 8, 10, 15, 20, 25, 30, 40, 50, 60, 80, 120, 200, 500};
     vector<Double_t> vec_HighPtBinEdge = {0, 10, 15, 20, 25, 30, 40, 45, 48, 50, 52, 55, 60, 80, 120, 200, 500};
-    vector<Double_t> vec_EtaBinEdge = {-2.4, -2.1, -1.6, -1.2, -0.9, -0.3, -0.2, 0, 0.2, 0.3, 0.9, 1.2, 1.6, 2.1, 2.4};
+    vector<Double_t> vec_EtaBinEdge = {-2.4, -2.1, -1.2, -0.9, -0.3, -0.2, 0.2, 0.3, 0.9, 1.2, 2.1, 2.4};
     Double_t degree15 = 3.141592 / 12.0;
     vector<Double_t> vec_PhiBinEdge =
     {
@@ -301,9 +301,7 @@ private:
     };
     vector<Double_t> vec_VtxBinEdge = 
     {
-      2.5, 4.5, 6.5, 8.5, 10.5, 12.5, 14.5, 16.5, 18.5, 20.5, 
-      22.5, 24.5, 26.5, 28.5, 30.5, 32.5, 34.5, 36.5, 38.5, 40.5,
-      42.5, 44.5, 46.5, 48.5, 50.5
+      0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60
     };
 
     TnPHistPt_ = new TnPHist("Pt", 0, vec_PtBinEdge);

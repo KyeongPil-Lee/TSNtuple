@@ -158,6 +158,9 @@ public:
   Double_t legendMinY_;
   Double_t legendMaxY_;
 
+  Int_t nLegendColumn_;
+  Bool_t setLegendColumn_;
+
   Double_t minX_;
   Double_t maxX_;
   Bool_t setRangeX_;
@@ -219,6 +222,12 @@ public:
     legendMinY_ = minY;
     legendMaxX_ = maxX;
     legendMaxY_ = maxY;
+  }
+
+  void SetLegendColumn( Int_t nColumn )
+  {
+    nLegendColumn_ = nColumn;
+    setLegendColumn_ = kTRUE;
   }
 
   void SetRangeX( Double_t min, Double_t max )
@@ -286,6 +295,9 @@ public:
     legendMinY_ = 0.70;
     legendMaxX_ = 0.95;
     legendMaxY_ = 0.95;
+
+    nLegendColumn_ = 0;
+    setLegendColumn_ = kFALSE;
 
     setRangeX_ = kFALSE;
     minX_ = 0;
@@ -433,6 +445,7 @@ public:
 
     TLegend *legend;
     PlotTool::SetLegend( legend, legendMinX_, legendMinY_, legendMaxX_, legendMaxY_ );
+    if( setLegendColumn_ ) legend->SetNColumns(nLegendColumn_);
 
     // -- draw canvas
     SetCanvas_Square();
@@ -495,6 +508,7 @@ public:
 
     TLegend *legend;
     PlotTool::SetLegend( legend, legendMinX_, legendMinY_, legendMaxX_, legendMaxY_ );
+    if( setLegendColumn_ ) legend->SetNColumns(nLegendColumn_);
 
     // -- draw canvas
     SetCanvas_Ratio();
@@ -611,6 +625,7 @@ public:
 
     TLegend *legend;
     PlotTool::SetLegend( legend, legendMinX_, legendMinY_, legendMaxX_, legendMaxY_ );
+    if( setLegendColumn_ ) legend->SetNColumns(nLegendColumn_);
 
     // -- draw canvas
     SetCanvas_Square();
@@ -675,6 +690,7 @@ public:
 
     TLegend *legend;
     PlotTool::SetLegend( legend, legendMinX_, legendMinY_, legendMaxX_, legendMaxY_ );
+    if( setLegendColumn_ ) legend->SetNColumns(nLegendColumn_);
 
     // -- draw canvas
     SetCanvas_Ratio();
@@ -703,7 +719,7 @@ public:
       g->SetTitle("");
 
       if( i == 0 ) PlotTool::SetAxis_TopPad( g->GetXaxis(), g->GetYaxis(), titleY_ );
-      if( setRangeX_ ) g->GetXaxis()->SetRangeUser( minX_, maxX_ );
+      if( setRangeX_ ) g->GetXaxis()->SetLimits( minX_, maxX_ );
       if( setRangeY_ ) g->GetYaxis()->SetRangeUser( minY_, maxY_ );
 
       legend->AddEntry( g, legendName );
@@ -739,6 +755,7 @@ public:
       g_ratio->SetTitle("");
 
       if( i == 0 ) SetAxis_BottomPad(g_ratio->GetXaxis(), g_ratio->GetYaxis(), titleX_, titleRatio_);
+      if( setRangeX_ )     g_ratio->GetXaxis()->SetLimits( minX_, maxX_ );
       if( setRangeRatio_ ) g_ratio->GetYaxis()->SetRangeUser( minRatio_, maxRatio_ );
     }
 
@@ -777,7 +794,11 @@ public:
     Int_t nPoint_NUM = g_NUM->GetN();
     Int_t nPoint_DEN = g_DEN->GetN();
     if( nPoint_NUM != nPoint_DEN )
-      printf("# points is different bewteen two graph...be careful for the ratio plot\n");
+    {
+      printf("============================= WARNING =============================\n");
+      printf("# points is different bewteen two graph... # point: (graph_NUM, graph_DEN) = (%d, %d). Be careful for the ratio plot\n", nPoint_NUM, nPoint_DEN);
+      printf("===================================================================\n");
+    }
 
     for(Int_t i_p=0; i_p<nPoint_NUM; i_p++)
     {

@@ -50,3 +50,6 @@ Outputs/
 *.log
 *__init__*
 *ACLiC*
+
+# plot
+*.pdf
