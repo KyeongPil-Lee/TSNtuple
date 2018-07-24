@@ -39,7 +39,7 @@ void DrawHistForEachVariable(TString var, Bool_t setZoomIn = kFALSE)
   canvasRatio->SetLegendPosition( 0.50, 0.32, 0.95, 0.45 );
   // canvasRatio->SetLegendColumn(2);
 
-  if( var == "Pt" && setZoomIn )  canvasRatio->SetRangeX(24, 120);
+  if( var == "Pt" && setZoomIn )  canvasRatio->SetRangeX(52, 200);
   if( var == "Pt" && !setZoomIn ) canvasRatio->SetRangeX(0,  500);
 
   canvasRatio->SetRangeY( 0.8, 1.05 );
@@ -51,9 +51,9 @@ void DrawHistForEachVariable(TString var, Bool_t setZoomIn = kFALSE)
 
 
   canvasRatio->RegisterLatex( 0.64, 0.96, "#font[42]{#scale[0.6]{Run318820-76 (250 pb^{-1})}}");
-  canvasRatio->RegisterLatex( 0.16, 0.91, "#font[42]{#scale[0.6]{IterL3 OI / L1SingleMu22}}");
+  canvasRatio->RegisterLatex( 0.16, 0.91, "#font[42]{#scale[0.6]{Mu50 / L1SingleMu22}}");
   if( var != "Pt" )
-    canvasRatio->RegisterLatex( 0.16, 0.87, "#font[42]{#scale[0.6]{P_{T} > 24 GeV}}");
+    canvasRatio->RegisterLatex( 0.16, 0.87, "#font[42]{#scale[0.6]{P_{T} > 52 GeV}}");
 
   canvasRatio->Draw();
 }
