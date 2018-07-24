@@ -34,8 +34,8 @@ public:
   Bool_t IsProbe() {
     Bool_t flag = kFALSE;
 
-    if( probe_.IsTight && 
-        probe_.RelPFIso_dBeta < 0.15 && 
+    if( probe_.IsHighPt && 
+        probe_.RelTrkIso < 0.10 && 
         probe_.IsL1Matched(ntuple_, 22) )
       flag = kTRUE;
 
