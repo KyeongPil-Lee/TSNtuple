@@ -50,6 +50,7 @@ public:
   Int_t           nL2Muon;
   Int_t           nL1Muon;
 
+  Int_t           nIterL3OI;
   Int_t           nIterL3_FromL2;
 
   // -- it makes seg. fault. why?! -- //
@@ -137,6 +138,7 @@ public:
     this->nTkMuon = ntuple->nTkMuon;
     this->nL1Muon = ntuple->nL1Muon;
     this->nIterL3_FromL2 = ntuple->nIterL3_FromL2;
+    this->nIterL3OI = ntuple->nIterL3OI;
   }
 };
 
@@ -939,6 +941,27 @@ public:
           flag = kTRUE;
           break;
         }
+      }
+    }
+
+    return flag;
+  }
+
+  Bool_t IsIterL3MuonOIMatched( NtupleHandle* ntuple, Double_t maxDR = 0.1 )
+  {
+    Bool_t flag = kFALSE;
+
+    KPEvent event(ntuple);
+
+    for(Int_t i_mu=0; i_mu<event.nIterL3OI; i_mu++)
+    {
+      KPIterL3MuonOI iterL3MuonOI(ntuple, i_mu);
+
+      Double_t dR = this->LVec_P.DeltaR( iterL3MuonOI.LVec_P );
+      if( dR < maxDR )
+      {
+        flag = kTRUE;
+        break;
       }
     }
 
