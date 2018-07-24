@@ -11,12 +11,13 @@ public:
 
   // -- user-defined tag condition -- //
   Bool_t IsTag() {
+    // -- IsoMu24 final filter: hltL3crIsoL1sSingleMu22L1f0L2f10QL3f24QL3trkIsoFiltered0p07 -- //
     // -- IsoMu27 final filter: hltL3crIsoL1sMu22Or25L1f0L2f10QL3f27QL3trkIsoFiltered0p07 -- //
     // -- Mu50 final filter: hltL3fL1sMu22Or25L1f0L2f10QL3Filtered50Q -- //
     Bool_t flag = kFALSE;
 
-    if( tag_.IsHLTFilterMatched( ntuple_, "hltL3crIsoL1sMu22Or25L1f0L2f10QL3f27QL3trkIsoFiltered0p07" ) &&
-        tag_.Pt > 29 &&
+    if( tag_.IsHLTFilterMatched( ntuple_, "hltL3crIsoL1sSingleMu22L1f0L2f10QL3f24QL3trkIsoFiltered0p07" ) &&
+        tag_.Pt > 26 &&
         fabs(tag_.Eta) < 2.4 &&
         tag_.IsTight && 
         tag_.RelPFIso_dBeta < 0.15 )
@@ -43,7 +44,7 @@ public:
   // -- user-defined passing probe condition -- //
   Bool_t IsPassingProbe() {
     Bool_t flag = kFALSE;
-    if( probe_.IsMYHLTFilterMatched( ntuple_, "hltL3crIsoL1sMu22Or25L1f0L2f10QL3f27QL3trkIsoFiltered0p07" ) )
+    if( probe_.IsMYHLTFilterMatched( ntuple_, "hltL3crIsoL1sSingleMu22L1f0L2f10QL3f24QL3trkIsoFiltered0p07" ) )
       flag = kTRUE;
 
     return flag;
@@ -136,12 +137,12 @@ private:
 
 };
 
-void MakeHist_IsoMu27overL1() {
+void MakeHist_IsoMu24overL1() {
   std::unique_ptr<HistProducer> histProducer( new HistProducer() );
   histProducer->SetOutputFileName("ROOTFile_TnPHist_example.root");
-  // histProducer->AddDataPath("/Users/KyeongPil_Lee/ServiceWorks/MuonHLT/v20180507_v01_UpdateTnPCode/TSNtuple/Analyzer/TagProbe/ExampleCodes/ntuple_9.root");
-  histProducer->AddDataPath("/home/kplee/data1/TSNtuple/v20180626_NonIsoMuEff_SingleMuon_Run2018Av2_Run316361to2_Menu2p0/ntuple_9.root");
-  histProducer->Set_minPt( 29 ); // -- min pT applied for eta, phi and vtx
+  histProducer->AddDataPath("/Users/KyeongPil_Lee/ServiceWorks/MuonHLT/v20180507_v01_UpdateTnPCode/TSNtuple/Analyzer/TagProbe/ExampleCodes/ntuple_9.root");
+  // histProducer->AddDataPath("/home/kplee/data1/TSNtuple/v20180626_NonIsoMuEff_SingleMuon_Run2018Av2_Run316361to2_Menu2p0/ntuple_9.root");
+  histProducer->Set_minPt( 26 ); // -- min pT applied for eta, phi and vtx
 
   histProducer->Produce();
 }
