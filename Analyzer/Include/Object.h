@@ -864,7 +864,7 @@ public:
     this->RelTrkIso = this->Iso03_sumPt / this->Pt;
 
     // -- should be added later -- //
-    this->IsHighPt = 0;
+    this->IsHighPt = ntuple->Muon_IsHighPt[index];
   }
 
   Bool_t IsHLTFilterMatched(NtupleHandle* ntuple, TString filterName)

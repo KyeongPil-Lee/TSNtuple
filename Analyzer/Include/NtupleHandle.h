@@ -493,6 +493,9 @@ public:
     chain->SetBranchStatus("Muon_IsLoose", 1);
     chain->SetBranchAddress("Muon_IsLoose", &Muon_IsLoose);
 
+    chain->SetBranchStatus("Muon_IsHighPt", 1);
+    chain->SetBranchAddress("Muon_IsHighPt", &Muon_IsHighPt);
+
     chain->SetBranchStatus("Muon_Iso03_sumPt", 1);
     chain->SetBranchAddress("Muon_Iso03_sumPt", &Muon_Iso03_sumPt);
 
