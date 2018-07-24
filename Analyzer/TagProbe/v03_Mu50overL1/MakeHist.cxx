@@ -17,8 +17,8 @@ public:
     // -- Mu50 final filter: hltL3fL1sMu22Or25L1f0L2f10QL3Filtered50Q -- //
     Bool_t flag = kFALSE;
 
-    if( tag_.IsHLTFilterMatched( ntuple_, "hltL3crIsoL1sSingleMu22L1f0L2f10QL3f24QL3trkIsoFiltered0p07" ) &&
-        tag_.Pt > 26 &&
+    if( tag_.IsHLTFilterMatched( ntuple_, "hltL3crIsoL1sMu22Or25L1f0L2f10QL3f27QL3trkIsoFiltered0p07" ) &&
+        tag_.Pt > 29 &&
         fabs(tag_.Eta) < 2.4 &&
         tag_.IsTight && 
         tag_.RelPFIso_dBeta < 0.15 )
