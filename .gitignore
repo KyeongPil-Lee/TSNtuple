@@ -1,5 +1,6 @@
 # Plots, Big files...
 Local/
+*.pdf
 
 # output from batch jobs
 *.o*

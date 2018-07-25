@@ -51,6 +51,10 @@ public:
   Int_t           nL1Muon;
 
   Int_t           nIterL3_FromL2;
+  Int_t           nIterL3OI;
+  Int_t           nIterL3MuonIOFromL2;
+  Int_t           nIterL3MuonIOFromL1;
+  Int_t           nIterL3MuonNoID;
 
   // -- it makes seg. fault. why?! -- //
   // ~KPEvent()
@@ -88,6 +92,20 @@ public:
 
     this->nGenParticle = -999;
     this->nMuon = -999;
+    this->nFiredTrigger = -999;
+    this->nHLTObject = -999;
+    this->nMyFiredTrigger = -999;
+    this->nMyHLTObject = -999;
+    this->nL3Muon = -999;
+    this->nTkMuon = -999;
+    this->nL2Muon = -999;
+    this->nL1Muon = -999;
+
+    this->nIterL3_FromL2 = -999;
+    this->nIterL3OI = -999;
+    this->nIterL3MuonIOFromL2 = -999;
+    this->nIterL3MuonIOFromL1 = -999;
+    this->nIterL3MuonNoID = -999;
   }
 
   KPEvent( NtupleHandle *ntuple )
@@ -136,7 +154,12 @@ public:
     this->nL2Muon = ntuple->nL2Muon;
     this->nTkMuon = ntuple->nTkMuon;
     this->nL1Muon = ntuple->nL1Muon;
+
     this->nIterL3_FromL2 = ntuple->nIterL3_FromL2;
+    this->nIterL3OI = ntuple->nIterL3OI;
+    this->nIterL3MuonIOFromL2 = ntuple->nIterL3IO_L2Seeded;
+    this->nIterL3MuonIOFromL1 = ntuple->nIterL3IO_FromL1;
+    this->nIterL3MuonNoID = ntuple->nIterL3MuonNoID;
   }
 };
 
@@ -765,7 +788,8 @@ public:
   Int_t           IsTight;
   Int_t           IsMedium;
   Int_t           IsLoose;
-  Int_t     IsHighPt;
+  Int_t           IsHighPt;
+  Int_t           IsSoft;
   Double_t        Iso03_sumPt;
   Double_t        Iso03_hadEt;
   Double_t        Iso03_emEt;
@@ -826,6 +850,8 @@ public:
     this->IsTight = ntuple->Muon_IsTight[index];
     this->IsMedium = ntuple->Muon_IsMedium[index];
     this->IsLoose = ntuple->Muon_IsLoose[index];
+    this->IsHighPt = ntuple->Muon_IsHighPt[index];
+    this->IsSoft = ntuple->Muon_IsSoft[index];
 
     this->Iso03_sumPt = ntuple->Muon_Iso03_sumPt[index];
     this->Iso03_hadEt = ntuple->Muon_Iso03_hadEt[index];
@@ -860,9 +886,6 @@ public:
     // -- https://twiki.cern.ch/twiki/bin/viewauth/CMS/SWGuideMuonIdRun2#Muon_Isolation -- //
     this->RelPFIso_dBeta = (PFIso04_Charged + max(0., PFIso04_Neutral + this->PFIso04_Photon - 0.5*this->PFIso04_SumPU))/this->Pt;
     this->RelTrkIso = this->Iso03_sumPt / this->Pt;
-
-    // -- should be added later -- //
-    this->IsHighPt = 0;
   }
 
   Bool_t IsHLTFilterMatched(NtupleHandle* ntuple, TString filterName)
@@ -986,6 +1009,27 @@ public:
     return flag;
   }
 
+  Bool_t IsIterL3MuonOIMatched( NtupleHandle* ntuple, Double_t maxDR = 0.1 )
+  {
+    Bool_t flag = kFALSE;
+
+    KPEvent event(ntuple);
+
+    for(Int_t i_mu=0; i_mu<event.nIterL3OI; i_mu++)
+    {
+      KPIterL3MuonOI iterL3MuonOI(ntuple, i_mu);
+
+      Double_t dR = this->LVec_P.DeltaR( iterL3MuonOI.LVec_P );
+      if( dR < maxDR )
+      {
+        flag = kTRUE;
+        break;
+      }
+    }
+
+    return flag;
+  }
+
   void Init()
   {
     this->dB = 0;
@@ -997,6 +1041,8 @@ public:
     this->IsTight = 0;
     this->IsMedium = 0;
     this->IsLoose = 0;
+    this->IsHighPt = 0;
+    this->IsSoft = 0;
     this->PFIso03_Charged = 0;
     this->PFIso03_Neutral = 0;
     this->PFIso03_Photon = 0;
