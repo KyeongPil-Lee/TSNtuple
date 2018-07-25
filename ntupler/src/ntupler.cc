@@ -800,7 +800,7 @@ void ntupler::Fill_HLT(const edm::Event &iEvent)
   {
     std::string filterTag = Handle_TriggerEvent->filterTag(i_filter).encode();
 
-    if( filterTag.find("sMu") != std::string::npos &&
+    if( (filterTag.find("sMu") != std::string::npos || filterTag.find("SingleMu") != std::string::npos) &&
       filterTag.find("Tau") == std::string::npos &&
       filterTag.find("EG") == std::string::npos &&
       filterTag.find("MultiFit") == std::string::npos )
@@ -856,7 +856,7 @@ void ntupler::Fill_MYHLT(const edm::Event &iEvent)
   {
     std::string filterTag = Handle_TriggerEvent->filterTag(i_filter).encode();
 
-    if( filterTag.find("sMu") != std::string::npos &&
+    if( (filterTag.find("sMu") != std::string::npos || filterTag.find("SingleMu") != std::string::npos) &&
       filterTag.find("Tau") == std::string::npos &&
       filterTag.find("EG") == std::string::npos &&
       filterTag.find("MultiFit") == std::string::npos )
