@@ -6,6 +6,9 @@ config.General.workArea = 'CRABDir'
 
 config.JobType.pluginName = 'Analysis'
 config.JobType.psetName = ''
+config.JobType.numCores = 4
+# config.JobType.maxMemoryMB = 2500
+# config.JobType.maxJobRuntimeMin = 2000
 
 config.Data.inputDataset = ''
 config.Data.useParent = True
