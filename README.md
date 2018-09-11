@@ -27,8 +27,8 @@ OI update was introduced in the menu v3.5 (Run >= 322381)
 ### Recipe
 
 ```
-cmsrel CMSSW_10_1_10
-cd CMSSW_10_1_10/src
+cmsrel CMSSW_10_2_4
+cd CMSSW_10_2_4/src
 cmsenv
 
 git clone git@github.com:KyeongPil-Lee/TSNtuple.git -b OIPerfAfterUpdate
@@ -69,9 +69,42 @@ HLTriggerFinalPath,HLTAnalyzerEndpath \
 python crabConfig_ntupler.py
 
 
-
-
-
-
 ```
 
+
+
+## TroubleShooting 
+
+### cmsRun Failure with CMSSW_10_1_10
+
+```
+		CmsRunFailure
+		CMSSW error message follows.
+		Fatal Exception
+		An exception of category 'FormatIncompatibility' occurred while
+		   [0] Constructing the EventProcessor
+		   [1] Constructing input source of type PoolSource
+		Exception Message:
+		The release you are using, "CMSSW_10_1_10" , predates
+		a release ("CMSSW_10_2_1") used in writing the input file, root://eoscms.cern.ch//eos/cms/store/data/Run2018D/SingleMuon/AOD/PromptReco-v2/000/322/356/00000/96334E26-8CB4-E811-8912-FA163E1C8AF7.root.
+		Forward compatibility cannot be supported.
+```
+
+
+
+in CMSSW_10_2_1
+
+```
+----- Begin Fatal Exception 11-Sep-2018 12:29:00 CEST-----------------------
+An exception of category 'PluginNotFound' occurred while
+   [0] Constructing the EventProcessor
+Exception Message:
+Unable to find plugin 'TSGForOIFromL2' in category 'CMS EDM Framework Module'. Please check spelling of name.
+----- End Fatal Exception -------------------------------------------------
+```
+
+
+
+TSGForOIFromL2: included in CMSSW_10_2_4 (release note: [link](https://github.com/cms-sw/cmssw/releases/tag/CMSSW_10_2_4))
+
+in CMSSW_10_2_4: no issues
