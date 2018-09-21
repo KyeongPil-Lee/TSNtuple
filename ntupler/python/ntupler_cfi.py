@@ -37,4 +37,5 @@ ntuplerBase = cms.EDAnalyzer("ntupler",
   IterL3IO_L2Seeded  = cms.untracked.InputTag("hltL3MuonsIterL3IO", "", "MYHLT"),
   IterL3IO_FromL1    = cms.untracked.InputTag("hltIter2IterL3FromL1MuonMerged", "", "MYHLT"),
   IterL3_FromL2      = cms.untracked.InputTag("hltIterL3MuonsFromL2LinksCombination", "", "MYHLT"),
+  IterL3MuonNoID     = cms.untracked.InputTag("hltIterL3MuonsNoID", "", "MYHLT"),
 )

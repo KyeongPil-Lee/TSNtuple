@@ -1,5 +1,6 @@
 # Plots, Big files...
 Local/
+*.pdf
 
 # output from batch jobs
 *.o*
@@ -46,8 +47,7 @@ Outputs/
 *.out
 *.app
 
-*.root
+# *.root
 *.log
-*test*
-*TEST*
 *__init__*
+*ACLiC*

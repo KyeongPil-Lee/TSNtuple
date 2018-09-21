@@ -53,38 +53,39 @@ using namespace reco;
 using namespace edm;
 
 ntupler::ntupler(const edm::ParameterSet& iConfig):
-Token_OfflineMuon           ( consumes< std::vector<reco::Muon> >         (iConfig.getUntrackedParameter<edm::InputTag>("OfflineMuon")) ),
-Token_OfflineVertex         ( consumes< reco::VertexCollection >        (iConfig.getUntrackedParameter<edm::InputTag>("OfflineVertex")) ),
-Token_TriggerResults        ( consumes<edm::TriggerResults>           (iConfig.getUntrackedParameter<edm::InputTag>("TriggerResults")) ),
-Token_TriggerEvent          ( consumes<trigger::TriggerEvent>         (iConfig.getUntrackedParameter<edm::InputTag>("TriggerEvent")) ),
-Token_MyTriggerResults      ( consumes<edm::TriggerResults>           (iConfig.getUntrackedParameter<edm::InputTag>("MyTriggerResults")) ),
-Token_MyTriggerEvent        ( consumes<trigger::TriggerEvent>         (iConfig.getUntrackedParameter<edm::InputTag>("MyTriggerEvent")) ),
-Token_L3Muon                ( consumes<reco::RecoChargedCandidateCollection>  (iConfig.getUntrackedParameter<edm::InputTag>("L3Muon")) ),
-Token_L2Muon                ( consumes<reco::RecoChargedCandidateCollection>  (iConfig.getUntrackedParameter<edm::InputTag>("L2Muon")) ),
-Token_L1Muon                ( consumes<l1t::MuonBxCollection>           (iConfig.getUntrackedParameter<edm::InputTag>("L1Muon")) ),
-Token_TkMuon                ( consumes<reco::RecoChargedCandidateCollection>  (iConfig.getUntrackedParameter<edm::InputTag>("TkMuon")) ),
+Token_OfflineMuon        ( consumes< std::vector<reco::Muon> >                (iConfig.getUntrackedParameter<edm::InputTag>("OfflineMuon"       )) ),
+Token_OfflineVertex      ( consumes< reco::VertexCollection >                 (iConfig.getUntrackedParameter<edm::InputTag>("OfflineVertex"     )) ),
+Token_TriggerResults     ( consumes< edm::TriggerResults >                    (iConfig.getUntrackedParameter<edm::InputTag>("TriggerResults"    )) ),
+Token_TriggerEvent       ( consumes< trigger::TriggerEvent >                  (iConfig.getUntrackedParameter<edm::InputTag>("TriggerEvent"      )) ),
+Token_MyTriggerResults   ( consumes< edm::TriggerResults >                    (iConfig.getUntrackedParameter<edm::InputTag>("MyTriggerResults"  )) ),
+Token_MyTriggerEvent     ( consumes< trigger::TriggerEvent >                  (iConfig.getUntrackedParameter<edm::InputTag>("MyTriggerEvent"    )) ),
+Token_L3Muon             ( consumes< reco::RecoChargedCandidateCollection >   (iConfig.getUntrackedParameter<edm::InputTag>("L3Muon"            )) ),
+Token_L2Muon             ( consumes< reco::RecoChargedCandidateCollection >   (iConfig.getUntrackedParameter<edm::InputTag>("L2Muon"            )) ),
+Token_L1Muon             ( consumes< l1t::MuonBxCollection  >                 (iConfig.getUntrackedParameter<edm::InputTag>("L1Muon"            )) ),
+Token_TkMuon             ( consumes< reco::RecoChargedCandidateCollection >   (iConfig.getUntrackedParameter<edm::InputTag>("TkMuon"            )) ),
 
-Token_IterL3OI              ( consumes< std::vector<reco::MuonTrackLinks> >  (iConfig.getUntrackedParameter<edm::InputTag>("IterL3OI")) ),
-Token_IterL3IO_L2Seeded     ( consumes< std::vector<reco::MuonTrackLinks> >  (iConfig.getUntrackedParameter<edm::InputTag>("IterL3IO_L2Seeded")) ),
-Token_IterL3IO_FromL1       ( consumes< std::vector<reco::Track> >           (iConfig.getUntrackedParameter<edm::InputTag>("IterL3IO_FromL1")) ),
-Token_IterL3_FromL2         ( consumes< std::vector<reco::MuonTrackLinks> >  (iConfig.getUntrackedParameter<edm::InputTag>("IterL3_FromL2")) ),
+Token_IterL3OI           ( consumes< std::vector<reco::MuonTrackLinks> >      (iConfig.getUntrackedParameter<edm::InputTag>("IterL3OI"          )) ),
+Token_IterL3IO_L2Seeded  ( consumes< std::vector<reco::MuonTrackLinks> >      (iConfig.getUntrackedParameter<edm::InputTag>("IterL3IO_L2Seeded" )) ),
+Token_IterL3IO_FromL1    ( consumes< std::vector<reco::Track> >               (iConfig.getUntrackedParameter<edm::InputTag>("IterL3IO_FromL1"   )) ),
+Token_IterL3_FromL2      ( consumes< std::vector<reco::MuonTrackLinks> >      (iConfig.getUntrackedParameter<edm::InputTag>("IterL3_FromL2"     )) ),
+Token_IterL3MuonNoID     ( consumes< std::vector<reco::Muon> >                (iConfig.getUntrackedParameter<edm::InputTag>("IterL3MuonNoID"    )) ),
 
-Token_ChargedIsoDep         ( consumes<reco::IsoDepositMap>           (iConfig.getUntrackedParameter<edm::InputTag>("ChargedIsoDep")) ),
-Token_NeutralIsoDep         ( consumes<reco::RecoChargedCandidateIsolationMap>  (iConfig.getUntrackedParameter<edm::InputTag>("NeutralIsoDep")) ),
-Token_PhotonIsoDep          ( consumes<reco::RecoChargedCandidateIsolationMap>  (iConfig.getUntrackedParameter<edm::InputTag>("PhotonIsoDep")) ),
-Token_Rho                   ( consumes<double>                  (iConfig.getUntrackedParameter<edm::InputTag>("Rho")) ),
-Token_OfflineRho            ( consumes<double>                  (iConfig.getUntrackedParameter<edm::InputTag>("OfflineRho")) ),
-Token_RhoECAL               ( consumes<double>                  (iConfig.getUntrackedParameter<edm::InputTag>("RhoECAL")) ),
-Token_RhoHCAL               ( consumes<double>                  (iConfig.getUntrackedParameter<edm::InputTag>("RhoHCAL")) ),
-Token_OfflineECALPFIso03    ( consumes<edm::ValueMap<float>>          (iConfig.getUntrackedParameter<edm::InputTag>("OfflineECALPFIso03")) ),
-Token_OfflineHCALPFIso03    ( consumes<edm::ValueMap<float>>          (iConfig.getUntrackedParameter<edm::InputTag>("OfflineHCALPFIso03")) ),
-Token_OfflineECALPFIso04    ( consumes<edm::ValueMap<float>>          (iConfig.getUntrackedParameter<edm::InputTag>("OfflineECALPFIso04")) ),
-Token_OfflineHCALPFIso04    ( consumes<edm::ValueMap<float>>          (iConfig.getUntrackedParameter<edm::InputTag>("OfflineHCALPFIso04")) ),
-Token_LumiScaler            ( consumes<LumiScalersCollection>           (iConfig.getUntrackedParameter<edm::InputTag>("LumiScaler")) ),
-Token_OfflineLumiScaler     ( consumes<LumiScalersCollection>           (iConfig.getUntrackedParameter<edm::InputTag>("OfflineLumiScaler")) ),
-Token_PUSummaryInfo         ( consumes< std::vector<PileupSummaryInfo> >    (iConfig.getUntrackedParameter<edm::InputTag>("PUSummaryInfo")) ),
-Token_GenEventInfo          ( consumes< GenEventInfoProduct >         (iConfig.getUntrackedParameter<edm::InputTag>("GenEventInfo")) ),
-Token_GenParticle           ( consumes<reco::GenParticleCollection>       (iConfig.getUntrackedParameter<edm::InputTag>("GenParticle")) )
+Token_ChargedIsoDep      ( consumes< reco::IsoDepositMap >                    (iConfig.getUntrackedParameter<edm::InputTag>("ChargedIsoDep"     )) ),
+Token_NeutralIsoDep      ( consumes< reco::RecoChargedCandidateIsolationMap > (iConfig.getUntrackedParameter<edm::InputTag>("NeutralIsoDep"     )) ),
+Token_PhotonIsoDep       ( consumes< reco::RecoChargedCandidateIsolationMap > (iConfig.getUntrackedParameter<edm::InputTag>("PhotonIsoDep"      )) ),
+Token_Rho                ( consumes< double >                                 (iConfig.getUntrackedParameter<edm::InputTag>("Rho"               )) ),
+Token_OfflineRho         ( consumes< double >                                 (iConfig.getUntrackedParameter<edm::InputTag>("OfflineRho"        )) ),
+Token_RhoECAL            ( consumes< double >                                 (iConfig.getUntrackedParameter<edm::InputTag>("RhoECAL"           )) ),
+Token_RhoHCAL            ( consumes< double >                                 (iConfig.getUntrackedParameter<edm::InputTag>("RhoHCAL"           )) ),
+Token_OfflineECALPFIso03 ( consumes< edm::ValueMap<float> >                   (iConfig.getUntrackedParameter<edm::InputTag>("OfflineECALPFIso03")) ),
+Token_OfflineHCALPFIso03 ( consumes< edm::ValueMap<float> >                   (iConfig.getUntrackedParameter<edm::InputTag>("OfflineHCALPFIso03")) ),
+Token_OfflineECALPFIso04 ( consumes< edm::ValueMap<float> >                   (iConfig.getUntrackedParameter<edm::InputTag>("OfflineECALPFIso04")) ),
+Token_OfflineHCALPFIso04 ( consumes< edm::ValueMap<float> >                   (iConfig.getUntrackedParameter<edm::InputTag>("OfflineHCALPFIso04")) ),
+Token_LumiScaler         ( consumes< LumiScalersCollection >                  (iConfig.getUntrackedParameter<edm::InputTag>("LumiScaler"        )) ),
+Token_OfflineLumiScaler  ( consumes< LumiScalersCollection >                  (iConfig.getUntrackedParameter<edm::InputTag>("OfflineLumiScaler" )) ),
+Token_PUSummaryInfo      ( consumes< std::vector<PileupSummaryInfo> >         (iConfig.getUntrackedParameter<edm::InputTag>("PUSummaryInfo"     )) ),
+Token_GenEventInfo       ( consumes< GenEventInfoProduct >                    (iConfig.getUntrackedParameter<edm::InputTag>("GenEventInfo"      )) ),
+Token_GenParticle        ( consumes< reco::GenParticleCollection >            (iConfig.getUntrackedParameter<edm::InputTag>("GenParticle"       )) )
 {
 
 }
@@ -166,6 +167,7 @@ void ntupler::analyze(const edm::Event &iEvent, const edm::EventSetup &iSetup)
   this->Fill_L1Muon(iEvent);
 
   this->Fill_IterL3(iEvent);
+  this->Fill_IterL3MuonNoID( iEvent );
 
   if( !iEvent.isRealData() ) this->Fill_GenParticle(iEvent);
 
@@ -270,6 +272,7 @@ void ntupler::Init()
     this->Muon_IsMedium[i] = 0;
     this->Muon_IsLoose[i] = 0;
     this->Muon_IsHighPt[i] = 0;
+    this->Muon_IsSoft[i] = 0;
 
     this->Muon_Iso03_sumPt[i] = -999;
     this->Muon_Iso03_hadEt[i] = -999;
@@ -416,6 +419,19 @@ void ntupler::Init()
     this->IterL3_FromL2_GL_Charge[i] = -999;
   }
 
+  this->nIterL3MuonNoID = 0;
+  for (int i=0; i<this->ArrSize; ++i) {
+    this->IterL3MuonNoID_Pt[i] = -999;
+    this->IterL3MuonNoID_Eta[i] = -999;
+    this->IterL3MuonNoID_Phi[i] = -999;
+    this->IterL3MuonNoID_Charge[i] = -999;
+
+    this->IterL3MuonNoID_IsGLB[i] = 0;
+    this->IterL3MuonNoID_IsSTA[i] = 0;
+    this->IterL3MuonNoID_IsTRK[i] = 0;
+  }
+
+
 }
 
 void ntupler::Make_Branch()
@@ -499,6 +515,7 @@ void ntupler::Make_Branch()
   this->ntuple->Branch("Muon_IsMedium", &Muon_IsMedium, "Muon_IsMedium[nMuon]/I");
   this->ntuple->Branch("Muon_IsLoose", &Muon_IsLoose, "Muon_IsLoose[nMuon]/I");
   this->ntuple->Branch("Muon_IsHighPt", &Muon_IsHighPt, "Muon_IsHighPt[nMuon]/I");
+  this->ntuple->Branch("Muon_IsSoft", &Muon_IsSoft, "Muon_IsSoft[nMuon]/I");
 
   this->ntuple->Branch("Muon_Iso03_sumPt", &Muon_Iso03_sumPt, "Muon_Iso03_sumPt[nMuon]/D");
   this->ntuple->Branch("Muon_Iso03_hadEt", &Muon_Iso03_hadEt, "Muon_Iso03_hadEt[nMuon]/D");
@@ -612,6 +629,14 @@ void ntupler::Make_Branch()
   this->ntuple->Branch("IterL3_FromL2_GL_Phi", &IterL3_FromL2_GL_Phi, "IterL3_FromL2_GL_Phi[nIterL3_FromL2]/D");
   this->ntuple->Branch("IterL3_FromL2_GL_Charge", &IterL3_FromL2_GL_Charge, "IterL3_FromL2_GL_Charge[nIterL3_FromL2]/D");
 
+  this->ntuple->Branch("nIterL3MuonNoID", &nIterL3MuonNoID, "nIterL3MuonNoID/I");
+  this->ntuple->Branch("IterL3MuonNoID_Pt", &IterL3MuonNoID_Pt, "IterL3MuonNoID_Pt[nIterL3_FromL2]/D");
+  this->ntuple->Branch("IterL3MuonNoID_Eta", &IterL3MuonNoID_Eta, "IterL3MuonNoID_Eta[nIterL3_FromL2]/D");
+  this->ntuple->Branch("IterL3MuonNoID_Phi", &IterL3MuonNoID_Phi, "IterL3MuonNoID_Phi[nIterL3_FromL2]/D");
+  this->ntuple->Branch("IterL3MuonNoID_Charge", &IterL3MuonNoID_Charge, "IterL3MuonNoID_Charge[nIterL3_FromL2]/D");
+  this->ntuple->Branch("IterL3MuonNoID_IsGLB", &IterL3MuonNoID_IsGLB, "IterL3MuonNoID_IsGLB[nIterL3_FromL2]/I");
+  this->ntuple->Branch("IterL3MuonNoID_IsSTA", &IterL3MuonNoID_IsSTA, "IterL3MuonNoID_IsSTA[nIterL3_FromL2]/I");
+  this->ntuple->Branch("IterL3MuonNoID_IsTRK", &IterL3MuonNoID_IsTRK, "IterL3MuonNoID_IsTRK[nIterL3_FromL2]/I");
 }
 
 void ntupler::Fill_Muon(const edm::Event &iEvent)
@@ -654,10 +679,12 @@ void ntupler::Fill_Muon(const edm::Event &iEvent)
       if( mu->isTrackerMuon() ) this->Muon_IsTRK[_nMuon] = 1;
       if( mu->isPFMuon() ) this->Muon_IsPF[_nMuon] = 1;
       // -- defintion of ID functions: http://cmsdoxygen.web.cern.ch/cmsdoxygen/CMSSW_9_4_0/doc/html/da/d18/namespacemuon.html#ac122b2516e5711ce206256d7945473d2 -- //
-      if( muon::isTightMuon( (*mu), pv ) ) this->Muon_IsTight[_nMuon] = 1;
-      if( muon::isMediumMuon( (*mu) ) ) this->Muon_IsMedium[_nMuon] = 1;
-      if( muon::isLooseMuon( (*mu) ) ) this->Muon_IsLoose[_nMuon] = 1;
+      if( muon::isTightMuon( (*mu), pv ) )  this->Muon_IsTight[_nMuon] = 1;
+      if( muon::isMediumMuon( (*mu) ) )     this->Muon_IsMedium[_nMuon] = 1;
+      if( muon::isLooseMuon( (*mu) ) )      this->Muon_IsLoose[_nMuon] = 1;
       if( muon::isHighPtMuon( (*mu), pv ) ) this->Muon_IsHighPt[_nMuon] = 1;
+      // bool muon::isSoftMuon(const reco::Muon& muon, const reco::Vertex& vtx, bool run2016_hip_mitigation)
+      if( muon::isSoftMuon( (*mu), pv, 0) ) this->Muon_IsSoft[_nMuon] = 1;
 
       this->Muon_Iso03_sumPt[_nMuon] = mu->isolationR03().sumPt;
       this->Muon_Iso03_hadEt[_nMuon] = mu->isolationR03().hadEt;
@@ -759,11 +786,11 @@ void ntupler::Fill_HLT(const edm::Event &iEvent)
       std::string PathName = TrigNames.triggerName(itrig);
 
       if( PathName.find("HLT_IsoMu") != std::string::npos ||
-        PathName.find("HLT_Mu45") != std::string::npos ||
-        PathName.find("HLT_Mu5") != std::string::npos ||
-        PathName.find("HLT_TkMu5") != std::string::npos ||
+        PathName.find("HLT_Mu") != std::string::npos ||
+        PathName.find("HLT_OldMu") != std::string::npos ||
+        PathName.find("HLT_TkMu") != std::string::npos ||
         PathName.find("HLT_IsoTkMu") != std::string::npos ||
-        PathName.find("HLT_Mu17") != std::string::npos ||
+        PathName.find("HLT_DoubleMu") != std::string::npos ||
         PathName.find("HLT_Mu8_T") != std::string::npos ) this->vec_FiredTrigger.push_back( PathName );
     } // -- if fired -- //
   } // -- iteration over all trigger names -- //
@@ -773,7 +800,7 @@ void ntupler::Fill_HLT(const edm::Event &iEvent)
   {
     std::string filterTag = Handle_TriggerEvent->filterTag(i_filter).encode();
 
-    if( filterTag.find("sMu") != std::string::npos &&
+    if( (filterTag.find("sMu") != std::string::npos || filterTag.find("SingleMu") != std::string::npos) &&
       filterTag.find("Tau") == std::string::npos &&
       filterTag.find("EG") == std::string::npos &&
       filterTag.find("MultiFit") == std::string::npos )
@@ -815,11 +842,11 @@ void ntupler::Fill_MYHLT(const edm::Event &iEvent)
       std::string PathName = TrigNames.triggerName(itrig);
 
       if( PathName.find("HLT_IsoMu") != std::string::npos ||
-        PathName.find("HLT_Mu45") != std::string::npos ||
-        PathName.find("HLT_Mu5") != std::string::npos ||
-        PathName.find("HLT_TkMu5") != std::string::npos ||
+        PathName.find("HLT_Mu") != std::string::npos ||
+        PathName.find("HLT_OldMu") != std::string::npos ||
+        PathName.find("HLT_TkMu") != std::string::npos ||
         PathName.find("HLT_IsoTkMu") != std::string::npos ||
-        PathName.find("HLT_Mu17") != std::string::npos ||
+        PathName.find("HLT_DoubleMu") != std::string::npos ||
         PathName.find("HLT_Mu8_T") != std::string::npos ) this->vec_MyFiredTrigger.push_back( PathName );
     } // -- if fired -- //
   } // -- iteration over all trigger names -- //
@@ -829,7 +856,7 @@ void ntupler::Fill_MYHLT(const edm::Event &iEvent)
   {
     std::string filterTag = Handle_TriggerEvent->filterTag(i_filter).encode();
 
-    if( filterTag.find("sMu") != std::string::npos &&
+    if( (filterTag.find("sMu") != std::string::npos || filterTag.find("SingleMu") != std::string::npos) &&
       filterTag.find("Tau") == std::string::npos &&
       filterTag.find("EG") == std::string::npos &&
       filterTag.find("MultiFit") == std::string::npos )
@@ -1163,6 +1190,30 @@ void ntupler::Fill_IterL3(const edm::Event &iEvent)
     }
     this->nIterL3_FromL2 = _nIterL3_FromL2;
   }
+
+}
+
+void ntupler::Fill_IterL3MuonNoID(const edm::Event &iEvent) {
+  edm::Handle< std::vector<reco::Muon> > Handle_IterL3MuonNoID;
+  if( iEvent.getByToken( Token_IterL3MuonNoID, Handle_IterL3MuonNoID) ) {
+    int _nIterL3MuonNoID = 0;
+    for( auto i=0U; i<Handle_IterL3MuonNoID->size(); ++i ) {
+      const auto& muon(Handle_IterL3MuonNoID->at(i));
+
+      this->IterL3MuonNoID_Pt[_nIterL3MuonNoID] = muon.pt();
+      this->IterL3MuonNoID_Eta[_nIterL3MuonNoID] = muon.eta();
+      this->IterL3MuonNoID_Phi[_nIterL3MuonNoID] = muon.phi();
+      this->IterL3MuonNoID_Charge[_nIterL3MuonNoID] = muon.charge();
+
+      if( muon.isGlobalMuon() )     this->IterL3MuonNoID_IsGLB[_nIterL3MuonNoID] = 1;
+      if( muon.isStandAloneMuon() ) this->IterL3MuonNoID_IsSTA[_nIterL3MuonNoID] = 1;
+      if( muon.isTrackerMuon() )    this->IterL3MuonNoID_IsTRK[_nIterL3MuonNoID] = 1;
+
+      _nIterL3MuonNoID++;
+    } // -- end of muon iteration
+
+    this->nIterL3MuonNoID = _nIterL3MuonNoID;
+  } // -- if getByToken is valid
 
 }
 

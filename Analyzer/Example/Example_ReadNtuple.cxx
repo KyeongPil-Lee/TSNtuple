@@ -1,8 +1,8 @@
-#include "Object.h"
+#include <Include/Object.h>
 #include <iostream>
 using namespace std;
 
-void Example()
+void Example_ReadNtuple()
 {
 	TChain *chain = new TChain("ntupler/ntuple");
 	// chain->Add("Local/ntuple_withoutFix.root");
