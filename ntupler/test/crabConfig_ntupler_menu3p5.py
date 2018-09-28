@@ -24,7 +24,7 @@ config.Site.storageSite = 'T2_KR_KNU'
 
 config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/DCSOnly/json_DCSONLY.txt'
 
-version = '_v20180928_'
+version = '_v20180928_2nd_'
 
 # 'MultiCRAB' part
 if __name__ == '__main__':
