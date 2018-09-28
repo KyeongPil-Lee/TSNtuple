@@ -1,0 +1,17 @@
+#include "MakeHist.h"
+#include <TagProbe/Setting.h>
+
+void MakeHist_KBMTF()
+{
+  std::unique_ptr<HistProducer> histProducer( new HistProducer() );
+  histProducer->SetOutputFileName("ROOTFile_TnPHist_KBMTF.root");
+
+  TString dataPath = Setting::dataPath_KBMTF
+  histProducer->AddDataPath(dataPath);
+
+  // histProducer->AddDataPath("/Users/KyeongPil_Lee/ServiceWorks/MuonHLT/v20180507_v01_UpdateTnPCode/TSNtuple/Analyzer/TagProbe/ExampleCodes/ntuple_9.root");
+
+  histProducer->Set_minPt( 26 ); // -- min pT applied for eta, phi and vtx
+
+  histProducer->Produce();
+}
