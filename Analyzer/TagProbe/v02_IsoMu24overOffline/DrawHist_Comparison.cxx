@@ -2,6 +2,7 @@
 
 void DrawHistForEachVariable(TString var, Bool_t setZoomIn = kFALSE);
 TGraphAsymmErrors* GetEffGraph( TString fileName, TString var );
+void HotFix( TGraphAsymmErrors *g, TString var );
 
 void DrawHist_Comparison() {
   DrawHistForEachVariable( "Pt" );
@@ -19,6 +20,8 @@ void DrawHistForEachVariable(TString var, Bool_t setZoomIn = kFALSE)
   TGraphAsymmErrors* g1 = GetEffGraph(fileName1, var);
   TGraphAsymmErrors* g2 = GetEffGraph(fileName2, var);
 
+  HotFix(g1, var);
+  
   // -- canvas with ratio
   TString canvasName = "c_vs"+var;
   if( setZoomIn ) canvasName = canvasName + "_zoomIn";
@@ -46,7 +49,7 @@ void DrawHistForEachVariable(TString var, Bool_t setZoomIn = kFALSE)
   canvasRatio->Latex_CMSPre();
 
 
-  canvasRatio->RegisterLatex( 0.60, 0.96, "#font[42]{#scale[0.6]{Run322625 (~340 pb^{-1})}}");
+  canvasRatio->RegisterLatex( 0.70, 0.96, "#font[42]{#scale[0.6]{Run322625 (~340 pb^{-1})}}");
   canvasRatio->RegisterLatex( 0.16, 0.91, "#font[42]{#scale[0.6]{IsoMu24 / TightID+PFIso(d#beta)/P_{T}<0.15}}");
   if( var != "Pt" )
     canvasRatio->RegisterLatex( 0.16, 0.87, "#font[42]{#scale[0.6]{P_{T} > 26 GeV}}");
@@ -61,4 +64,13 @@ TGraphAsymmErrors* GetEffGraph( TString fileName, TString var )
   TGraphAsymmErrors* gEff = tool->CalcTnPEff_CutAndCount( var );
 
   return gEff;
+}
+
+void HotFix( TGraphAsymmErrors *g, TString var )
+{
+  if( var == "Vtx")
+  {
+    g->RemovePoint(0);
+    g->RemovePoint(0);
+  }
 }
