@@ -6,7 +6,7 @@ void MakeHist_Default()
   std::unique_ptr<HistProducer> histProducer( new HistProducer() );
   histProducer->SetOutputFileName("ROOTFile_TnPHist_Default.root");
 
-  TString dataPath = Setting::dataPath_Default
+  TString dataPath = Setting::dataPath_Default;
   histProducer->AddDataPath(dataPath);
 
   // histProducer->AddDataPath("/Users/KyeongPil_Lee/ServiceWorks/MuonHLT/v20180507_v01_UpdateTnPCode/TSNtuple/Analyzer/TagProbe/ExampleCodes/ntuple_9.root");
